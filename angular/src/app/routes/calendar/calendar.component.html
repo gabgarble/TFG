@@ -1,0 +1,439 @@
+<div class="row nav-bar">
+    <div class="col-12 d-flex align-items-center">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn " id="dropdownForm1" ngbDropdownToggle>
+                <i class="fas fa-2x fa-align-justify"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="openSettingsModal()">Settings</button>
+                <button ngbDropdownItem (click)="openUsersManagementModal()">Users Management</button>
+                <button ngbDropdownItem (click)="openImportCalendarModal()">Calendars Management</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row text-center mt-4" style="margin-right: 0px;">
+    <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                Previous
+            </div>
+            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                Today
+            </div>
+            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                Next
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
+                [class.active]="view === CalendarView.Month">
+                Month
+            </div>
+            <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week">
+                Week
+            </div>
+            <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+                Day
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div [ngSwitch]="view" class="mt-3">
+    <div class="col-12">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-day-view>
+        <button type="button" class="float round-button btn btn-primary" (click)="openAddEventModal()">
+            <i class="fas fa-3x fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<div *ngIf="loadingEvents == false; else spinner">
+</div>
+
+
+<!-- Modify event modl -->
+<ng-template #modifyEventModal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Event action occurred</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            Action:
+            <pre>{{ modalData?.action }}</pre>
+        </div>
+        <div>
+            Event:
+            <pre>{{ modalData?.event | json }}</pre>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">
+            OK
+        </button>
+    </div>
+</ng-template>
+
+<!-- Modal to add new event -->
+<ng-template #addNewEventModal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Add new event</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addNewEventForm">
+            <div class="form-group">
+                <input class="form-control" id="title" placeholder="Title event" formControlName="title">
+            </div>
+            <div class="form-group row ml-1 mt-5">
+                <label>All day</label>
+                <div class="checkbox c-checkbox ml-2">
+                    <label>
+                        <input class="resize-checkbox form-control" id="allDay" type="checkbox"
+                            formControlName="allDay" />
+                    </label>
+                </div>
+                <label class="ml-5">Automatic date</label>
+                <div class="checkbox c-checkbox ml-2">
+                    <label>
+                        <input class="resize-checkbox form-control" id="automaticDate" type="checkbox"
+                            formControlName="automaticDate" />
+                    </label>
+                </div>
+            </div>
+            <div class="row" style="margin-right: 0px;" *ngIf="addNewEventForm.value.automaticDate != true">
+                <div class="col-6 d-flex align-items-center mt-3">
+                    <label class="mr-1">From</label>
+                    <div class="form-group ml-2">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dpStart" ngbDatepicker
+                                #d1="ngbDatepicker" [(ngModel)]="startDate" formControlName="start">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                    type="button"><i class="far fa-calendar-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" *ngIf="addNewEventForm.value.allDay != true">
+                    <ngb-timepicker [(ngModel)]="startTime" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                </div>
+            </div>
+            <div class="row" style="margin-right: 0px;" *ngIf="addNewEventForm.value.automaticDate != true">
+                <div class="col-6 d-flex align-items-center mt-3">
+                    <label class="mr-4">To</label>
+                    <div class="form-group ml-2">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dpEnd" ngbDatepicker
+                                #d2="ngbDatepicker" [(ngModel)]="endDate" formControlName="end">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                    type="button"><i class="far fa-calendar-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" *ngIf="addNewEventForm.value.allDay != true">
+                    <ngb-timepicker [(ngModel)]="endTime" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                </div>
+            </div>
+            <div class="row mt-5" style="margin-right: 0px;">
+                <ng-select class="ml-3" [items]="addedUsers" bindLabel="email" [addTag]="true" [multiple]="true"
+                    [hideSelected]="true" [trackByFn]="trackByFn" [minTermLength]="0" [loading]="loadingUsers"
+                    [typeahead]="addedUserInput" [(ngModel)]="selectedAddedUsers" formControlName="userEmail"
+                    style="width: 100%;">
+                </ng-select>
+                <a class="ml-3 mt-1 pointer" (click)="openAvailableHoursModal()" style="color: blue;"> See available
+                    hours </a>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size" (click)="close()">
+            Cancel <i class="fas fa-times"></i>
+        </button>
+        <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+            [disabled]="!addNewEventForm.valid" (click)="saveNewEvent(addNewEventForm.value)">
+            Save <i class="far fa-save"></i>
+        </button>
+    </div>
+</ng-template>
+
+<!-- Modal to modify settings -->
+<ng-template #settingsModal let-modal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Settings</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabSettings" class="nav-tabs">
+        <li class="tab-size" [ngbNavItem]="1">
+            <a ngbNavLink>General settings</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <form [formGroup]="settingsForm">
+                        <div class="form-group">
+                            <label for="exampleUsername">User name</label>
+                            <input class="form-control" id="name" placeholder="User name" formControlName="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleUsername">User surname</label>
+                            <input class="form-control" id="surname" placeholder="User surname"
+                                formControlName="surname">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleUsername">Username</label>
+                            <input class="form-control" id="username" placeholder="Username" formControlName="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleUsername">Email</label>
+                            <input class="form-control" id="email" placeholder="User email" formControlName="email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                        (click)="close()">
+                        Cancel <i class="fas fa-times"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                        [disabled]="!settingsForm.valid" (click)="saveSettings(settingsForm.value)">
+                        Save <i class="far fa-save"></i>
+                    </button>
+                </div>
+            </ng-template>
+        </li>
+        <li class="tab-size" [ngbNavItem]="2">
+            <a ngbNavLink>Change password</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <form [formGroup]="changePasswordForm">
+                        <div class="form-group">
+                            <label for="exampleUsername">Password</label>
+                            <input class="form-control" type="password" id="password" placeholder="Password"
+                                formControlName="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleUsername">Repeat password</label>
+                            <input class="form-control" type="password" id="title" placeholder="Repeat password"
+                                formControlName="confirmPassword">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                        (click)="close()">
+                        Cancel <i class="fas fa-times"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                        [disabled]="!changePasswordForm.valid" (click)="changePassword(changePasswordForm.value)">
+                        Save <i class="far fa-save"></i>
+                    </button>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template>
+
+<!-- Modal to import calendar -->
+<ng-template #importCalendarModal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Manage calendars</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabImport" class="nav-tabs">
+        <li class="tab-size" [ngbNavItem]="1">
+            <a ngbNavLink>Import new calendar</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <form [formGroup]="importCalendarForm">
+                        <div class="row" style="margin-right: 0px;">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input class="form-control" id="calendarName" placeholder="Calendar name..."
+                                        formControlName="calendarName">
+                                </div>
+                            </div>
+                            <div class="col-6 ">
+                                <div class="form-group">
+                                    <input type="file" class="form-control" id="file" formControlName="file"
+                                        (change)="onFileChange($event)">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                        (click)="close()">
+                        Cancel <i class="fas fa-times"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                        [disabled]="!importCalendarForm.valid" (click)="importCalendar(importCalendarForm.value)">
+                        Import <i class="fas fa-upload"></i>
+                    </button>
+                </div>
+            </ng-template>
+        </li>
+        <li class="tab-size" [ngbNavItem]="2">
+            <a ngbNavLink>Imported Calendars</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <div class="row" style="margin-right: 0px;">
+                        <div class="col-6">
+                            <label class="mt-2">Calendar name</label>
+                        </div>
+                        <div class="col-6 ">
+                            <button type="button" class="btn btn-primary"
+                                (click)="importCalendar(importCalendarForm.value)">
+                                Delete Calendar <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template>
+
+<!-- Modal to manage users -->
+<ng-template #usersManagementModal let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Users management</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabUsers" class="nav-tabs">
+        <li class="tab-size" [ngbNavItem]="1">
+            <a ngbNavLink>Add new users</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <div class="row" style="margin-right: 0px;">
+                        <div class="col-8">
+                            <form [formGroup]="usersManagementForm">
+                                <div class="form-group">
+                                    <input class="form-control" id="userEmail" formControlName="userEmail"
+                                        placeholder="User email">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-4 text-center">
+                            <button type="button" class="btn btn-secondary resize-user-buttons mr-2"
+                                [disabled]="!usersManagementForm.valid"
+                                (click)="sendUserPetition(usersManagementForm.value)">
+                                Send <i class="far fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li class="tab-size" [ngbNavItem]="2">
+            <a ngbNavLink>Petitions</a>
+            <ng-template ngbNavContent>
+                <div class="modal-body">
+                    <div class="row" *ngFor="let petition of pendingUserPetitions">
+                        <div class="col-3">
+                            <label class="mt-2">{{ petition.userSender.name }}</label>
+                        </div>
+                        <div class="col-3">
+                            <label class="mt-2">{{ petition.userSender.email }}</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <button type="button" class="btn btn-secondary resize-user-buttons mr-2 ml-4"
+                                    (click)="acceptUserPetition(petition.id)">
+                                    Accept <i class="fas fa-check"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary resize-user-buttons"
+                                    (click)="declineUserPetition(petition.id)">
+                                    Reject <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template>
+
+<!-- Modal to see the availables hours -->
+<ng-template #availableHoursModal let-close="close" style="height: 80vh;">
+    <div class="modal-header">
+        <h5 class="modal-title">Users management</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row text-center mb-3" style="margin-right: 0px;">
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <div class="btn btn-primary" mwlCalendarPreviousView [view]="view2" [(viewDate)]="viewDate2"
+                        (viewDateChange)="closeOpenMonthViewDay()">
+                        Previous
+                    </div>
+                    <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate2">
+                        Today
+                    </div>
+                    <div class="btn btn-primary" mwlCalendarNextView [view]="view2" [(viewDate)]="viewDate2"
+                        (viewDateChange)="closeOpenMonthViewDay()">
+                        Next
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>{{ viewDate2 | calendarDate:(view2 + 'ViewTitle'):'en' }}</h3>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        <mwl-calendar-week-view [viewDate]="viewDate2" [events]="availableHours" [refresh]="refresh">
+        </mwl-calendar-week-view>
+    </div>
+</ng-template>
+
+<ng-template #spinner>
+    <div>
+        <app-spinner></app-spinner>
+    </div>
+</ng-template>
