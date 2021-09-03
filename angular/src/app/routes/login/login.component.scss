@@ -1,0 +1,81 @@
+.background {
+    background-color: lightgrey;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    background-position: center center;
+}
+
+.logo-background {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: darkgrey;
+}
+
+.form-background {
+    height: 100%;
+    width: 100%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: white;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.new-card {
+    width: 70vh;
+    height: 48vh;
+    margin-left: 0px !important;
+    border-radius: 15px;
+}
+
+.new-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.tab-size {
+    width: 50%;
+}
+
+.button-width {
+    width: 100%;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #ffffff;
+}
+
+.nav-tabs .nav-link {
+    border-color: #ffffff #ffffff #ffffff;
+    background-color: #dee2e6;
+    border: 0px solid transparent;
+}
+
+.nav-tabs .nav-link.active {
+    border-color: #ffffff #ffffff #ffffff;
+    background-color: #ffffff;
+}
+
+.fa-facebook-square {
+    color: #3b5998;
+}
+
+.fa-google-plus-square {
+    color: #db4a39;
+}
+
+.fa-twitter-square {
+    color: #00acee;
+}
+
+.align-tab-content-1 {
+    height: 40vh;
+}
+
+.align-tab-content-2 {
+    margin-top: 35px;
+    height: 40vh;
+}

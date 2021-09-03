@@ -1,0 +1,16 @@
+{
+    "apiUrl": "http://127.0.0.1:8000/",
+    "languageSettings": {
+        "defaultLanguage": "es_ES",
+        "languages": [
+            {
+                "name": "Español",
+                "file": "es_ES"
+            },
+            {
+                "name": "English",
+                "file": "en"
+            }
+        ]
+    }
+}

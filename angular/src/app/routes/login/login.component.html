@@ -1,0 +1,84 @@
+<div class="row background">
+  <div class="col-12 d-flex align-items-center justify-content-center">
+    <div class="row new-card">
+      <div class="col-4 logo-background d-flex align-items-center justify-content-center">
+        <img src="https://img.icons8.com/fluency/250/000000/calendar.png" />
+      </div>
+      <div class="col-8 form-background">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs text-center">
+          <li class="tab-size" [ngbNavItem]="1">
+            <a ngbNavLink>Sign In</a>
+            <ng-template ngbNavContent>
+              <form [formGroup]="signInForm" style="width: 30vh;">
+                <div class="form-group">
+                  <input type="email" class="form-control" id="signInEmailUsername" aria-describedby="emailHelp"
+                    placeholder="Email" formControlName="identification">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="signInPassword" placeholder="Password"
+                    formControlName="password">
+                </div>
+                <div class="row form-group">
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary mt-2 button-width"
+                      (click)="submitSignIn(signInForm.value)" [disabled]="!signInForm.valid">Sign In</button>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </li>
+          <li class="tab-size" [ngbNavItem]="2">
+            <a ngbNavLink style="border-top-right-radius: 15px;">Sign Up</a>
+            <ng-template ngbNavContent>
+              <form [formGroup]="signUpForm" style="width: 30vh;">
+                <div class="form-group">
+                  <input type="email" class="form-control" id="signUpUsername" aria-describedby="emailHelp"
+                    placeholder="Enter username" formControlName="username">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="singUpPassword" placeholder="Password"
+                    formControlName="password">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="signUpConfirmPassword" placeholder="Repeat password"
+                    formControlName="confirmPassword">
+                </div>
+                <div class="row form-group">
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary mb-3 mt-2 button-width"
+                      (click)="submitSignUp(signInForm.value)" [disabled]="!signUpForm.valid">Sign Up</button>
+                  </div>
+                </div>
+                <div class="row form-group text-center">
+                  <div class="col-12">
+                    <div class="row text-center">
+                      <div class="col-12 text-center">
+                        <label>Or using:</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-4">
+                        <i class="fab fa-facebook-square fa-3x"></i>
+                      </div>
+                      <div class="col-4">
+                        <i class="fab fa-google-plus-square fa-3x"></i>
+                      </div>
+                      <div class="col-4">
+                        <i class="fab fa-twitter-square fa-3x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" [ngClass]="{'align-tab-content-1': activeTab == 1, 'align-tab-content-2': activeTab == 2}" class="col-12 d-flex align-items-center justify-content-center"></div>
+      </div>
+    </div>
+  </div>
+</div>

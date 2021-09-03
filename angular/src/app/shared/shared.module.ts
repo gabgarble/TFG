@@ -1,0 +1,37 @@
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SpinnerComponent } from './components/spinner/spinner.component'
+
+@NgModule({
+
+  imports: [
+    CommonModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule
+  ],
+  providers: [
+    DatePipe
+  ],
+  declarations: [
+    SpinnerComponent
+  ],
+  exports: [
+    CommonModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SpinnerComponent
+  ]
+})
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule
+    };
+  }
+}
