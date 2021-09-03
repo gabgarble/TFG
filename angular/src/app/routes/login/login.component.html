@@ -7,7 +7,7 @@
       <div class="col-8 form-background">
         <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs text-center">
           <li class="tab-size" [ngbNavItem]="1">
-            <a ngbNavLink>Sign In</a>
+            <a ngbNavLink class="tab-text-font">Sign In</a>
             <ng-template ngbNavContent>
               <form [formGroup]="signInForm" style="width: 30vh;">
                 <div class="form-group">
@@ -24,11 +24,30 @@
                       (click)="submitSignIn(signInForm.value)" [disabled]="!signInForm.valid">Sign In</button>
                   </div>
                 </div>
+                <div class="row form-group text-center">
+                  <div class="col-12">
+                    <div class="row text-center">
+                      <div class="col-12 text-center">
+                        <label>Or using:</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"></div>
+                      <div class="col-4">
+                        <img src="https://img.icons8.com/color/55/000000/facebook-circled--v1.png"/>
+                      </div>
+                      <div class="col-4">
+                        <img src="https://img.icons8.com/color/48/000000/google-logo.png"/>
+                      </div>
+                      <div class="col-2"></div>
+                    </div>
+                  </div>
+                </div>
               </form>
             </ng-template>
           </li>
           <li class="tab-size" [ngbNavItem]="2">
-            <a ngbNavLink style="border-top-right-radius: 15px;">Sign Up</a>
+            <a ngbNavLink class="tab-text-font" style="border-top-right-radius: 15px;">Sign Up</a>
             <ng-template ngbNavContent>
               <form [formGroup]="signUpForm" style="width: 30vh;">
                 <div class="form-group">
@@ -49,7 +68,7 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-12">
-                    <button type="submit" class="btn btn-primary mb-3 mt-2 button-width"
+                    <button type="submit" class="btn btn-primary mt-2 button-width"
                       (click)="submitSignUp(signInForm.value)" [disabled]="!signUpForm.valid">Sign Up</button>
                   </div>
                 </div>
@@ -61,15 +80,14 @@
                       </div>
                     </div>
                     <div class="row">
+                      <div class="col-2"></div>
                       <div class="col-4">
-                        <i class="fab fa-facebook-square fa-3x"></i>
+                        <img src="https://img.icons8.com/color/55/000000/facebook-circled--v1.png"/>
                       </div>
                       <div class="col-4">
-                        <i class="fab fa-google-plus-square fa-3x"></i>
+                        <img src="https://img.icons8.com/color/48/000000/google-logo.png"/>
                       </div>
-                      <div class="col-4">
-                        <i class="fab fa-twitter-square fa-3x"></i>
-                      </div>
+                      <div class="col-2"></div>
                     </div>
                   </div>
                 </div>
@@ -77,7 +95,7 @@
             </ng-template>
           </li>
         </ul>
-        <div [ngbNavOutlet]="nav" [ngClass]="{'align-tab-content-1': activeTab == 1, 'align-tab-content-2': activeTab == 2}" class="col-12 d-flex align-items-center justify-content-center"></div>
+        <div [ngbNavOutlet]="nav" class="col-12 d-flex align-items-center justify-content-center align-tab-content"></div>
       </div>
     </div>
   </div>

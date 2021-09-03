@@ -12,7 +12,7 @@
     width: 100%;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    background-color: darkgrey;
+    background-color: #007bff;
 }
 
 .form-background {
@@ -38,6 +38,11 @@
 
 .tab-size {
     width: 50%;
+}
+
+.tab-text-font {
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .button-width {
@@ -71,11 +76,7 @@
     color: #00acee;
 }
 
-.align-tab-content-1 {
+.align-tab-content {
     height: 40vh;
-}
-
-.align-tab-content-2 {
-    margin-top: 35px;
-    height: 40vh;
+    margin-top: 30px;
 }
