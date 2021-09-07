@@ -33,9 +33,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /* Menu items */
   public menuItems: MenuItem[] = [
-    { key: "settings", value: "Settings", size: "md" },
-    { key: "usersManagement", value: "Users Management", size: "md" },
-    { key: "calendarsManagement", value: "Calendars Management", size: "lg" }];
+    { key: "settings", value: "Settings", size: "md", icon: 'fas fa-cog' },
+    { key: "usersManagement", value: "Users Management", size: "md", icon: 'fas fa-user' },
+    { key: "calendarsManagement", value: "Calendars Management", size: "lg", icon: 'fas fa-calendar-alt' }];
 
   /* Default active TABs */
   public defaultActiveTabSettings = 1;

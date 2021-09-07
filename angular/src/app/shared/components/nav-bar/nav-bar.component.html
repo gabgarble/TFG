@@ -6,7 +6,10 @@
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="items != null">
                 <div *ngFor="let item of items">
-                    <button ngbDropdownItem (click)="itemClicked(item)">{{ item.value }}</button>
+                    <button ngbDropdownItem (click)="itemClicked(item)">
+                        <i [ngClass]='item.icon'></i>
+                        {{ item.value }}
+                    </button>
                 </div>
             </div>
         </div>
