@@ -10,15 +10,15 @@ export class User extends BaseModel<number> {
   public password?: string;
 }
 
-export class SignIn {
-  public email: string;
-  public password: string;
+export interface SignIn {
+  email: string;
+  password: string;
 }
 
-export class SignUp {
-  public username: string;
-  public email: string;
-  public password: string;
+export interface SignUp {
+  username: string;
+  email: string;
+  password: string;
 }
 
 @Injectable({

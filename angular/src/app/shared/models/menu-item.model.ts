@@ -1,6 +1,6 @@
-export class MenuItem {
+export interface MenuItem {
     key: string | number;
-    value: string | number;;
+    value: string | number;
     size: string;
     icon: string;
 }
