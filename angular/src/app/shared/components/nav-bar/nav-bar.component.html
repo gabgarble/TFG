@@ -1,0 +1,14 @@
+<div class="row nav-bar">
+    <div class="col-12 d-flex align-items-center">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn " id="dropdownForm1" ngbDropdownToggle>
+                <i class="fas fa-2x fa-align-justify"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="items != null">
+                <div *ngFor="let item of items">
+                    <button ngbDropdownItem (click)="itemClicked(item)">{{ item.value }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
