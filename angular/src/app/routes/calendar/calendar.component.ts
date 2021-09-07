@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService, ColorService, UserPetitionService, UserService } from '../../shared/services';
-import { Color, User, UserPetition } from 'src/app/shared/models';
+import { Color, MenuItem, User, UserPetition } from 'src/app/shared/models';
 import { EventService } from '../../shared/services/event.service';
 
 /*const colors: any = {
@@ -30,6 +30,12 @@ import { EventService } from '../../shared/services/event.service';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
+
+  /* Menu items */
+  public menuItems: MenuItem[] = [
+    { key: "settings", value: "Settings", size: "md" },
+    { key: "usersManagement", value: "Users Management", size: "md" },
+    { key: "calendarsManagement", value: "Calendars Management", size: "lg" }];
 
   /* Default active TABs */
   public defaultActiveTabSettings = 1;
@@ -212,7 +218,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.events = data;
-          this.events.forEach( x => {
+          this.events.forEach(x => {
             x.start = new Date(x.start)
             x.end = new Date(x.end)
           });
@@ -477,20 +483,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   }
 
-  public openSettingsModal() {
-    this.modal.open(this.settingsModal, { size: 'md' });
-  }
-
-  public openUsersManagementModal() {
-    this.modal.open(this.usersManagementModal, { size: 'md' });
-  }
-
-  public openImportCalendarModal() {
-    this.modal.open(this.importCalendarModal, { size: 'lg' });
-  }
-
   public openAvailableHoursModal() {
-    this.modal.open(this.availableHoursModal, { size: 'xl', scrollable: true});
+    this.modal.open(this.availableHoursModal, { size: 'xl', scrollable: true });
+  }
+
+  public openModal(modal: MenuItem) {
+    switch (modal.key) {
+      case "settings":
+        this.modal.open(this.settingsModal, { size: modal.size });
+        break;
+      case "usersManagement":
+        this.modal.open(this.usersManagementModal, { size: modal.size });
+        break;
+      case "calendarsManagement":
+        this.modal.open(this.importCalendarModal, { size: modal.size });
+        break;
+    }
   }
 
   /* New event */
