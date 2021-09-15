@@ -1,10 +1,5 @@
 $font-size-base: 1rem;
 
-.modal-buttons-text-size {
-    font-size: $font-size-base * 1.25;
-    font-weight: 300;
-}
-
 .h3 {
     margin: 0 0 10px;
 }
@@ -14,6 +9,20 @@ $font-size-base: 1rem;
     padding: 15px;
 }
 
+.resize-checkbox {
+    height: 30px;
+    width: 30px;
+}
+
+.resize-user-buttons {
+    width: 100px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Float add button styles*/
 .float {
     position: fixed;
     bottom: 7vh;
@@ -26,9 +35,22 @@ $font-size-base: 1rem;
     border-radius: 50%;
 }
 
-.resize-checkbox {
-    height: 30px;
-    width: 30px;
+.modal-buttons-text-size {
+    font-size: $font-size-base * 1.25;
+    font-weight: 300;
+}
+
+/* Modal styles */
+.modal-header {
+    background-color: #007bff;
+    border-color: #0062cc;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+}
+
+.modal-content {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
 }
 
 .resize-modal-buttons {
@@ -36,32 +58,7 @@ $font-size-base: 1rem;
     width: 120px;
 }
 
-.resize-user-buttons {
-    width: 100px;
-}
-
-.nav-bar {
-    background-color: #0069d9;
-    border-color: #0062cc;
-    height: 55px;
-    margin-right: 0px;
-}
-
-.dropdown-toggle::after {
-    display: none;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0.3em solid;
-    border-right: 0.3em solid transparent;
-    border-bottom: 0;
-    border-left: 0.3em solid transparent;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #dee2e6;;
-}
-
+/* Card styles */
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -72,23 +69,7 @@ $font-size-base: 1rem;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.vertical-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
-.tab-size {
- width: 50%;
-}
-
-.modal-header {
-    background-color: #0069d9;
-    border-color: #0062cc;
-}
-
+/* Nav change the styles */
 .nav-tabs {
     border-bottom: 1px solid #ffffff;
 }
@@ -104,6 +85,32 @@ $font-size-base: 1rem;
     background-color: #ffffff;
 }
 
-.pointer {
-    cursor: pointer;
+.tab-size {
+    width: 50%;
+}
+
+/* Nav bar buttons change styles */
+.btn-nav-bar {
+    color: black;
+    background-color: #fff;
+    border-color: black;
+}
+
+.btn-nav-bar.dropdown-toggle {
+    color: black;
+    background-color: #fff;
+    border-color: black;
+}
+
+.btn-nav-bar:hover {
+    color: #fff;
+    background-color: lightgrey;
+    border-color: black;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: lightgrey;
 }

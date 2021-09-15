@@ -1,42 +1,55 @@
-<app-nav-bar [items]="menuItems" (itemChoosed)="openModal($event)"></app-nav-bar>
-
-
-<div class="row text-center mt-4" style="margin-right: 0px;">
-    <div class="col-md-4">
-        <div class="btn-group">
-            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                Previous
-            </div>
-            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                Today
-            </div>
-            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                Next
+<app-nav-bar [items]="menuItems" (itemChoosed)="openModal($event)">
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-2 d-flex justify-content-center">
+                    <button class="btn btn-nav-bar" mwlCalendarToday [(viewDate)]="viewDate">
+                        Today
+                    </button>
+                </div>
+                <div class="col-2 d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-nav-bar round-button" mwlCalendarPreviousView [view]="view"
+                                [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-nav-bar round-button" mwlCalendarNextView [view]="view"
+                                [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 d-flex justify-content-center ml-4">
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-nav-bar" id="dropdownBasic1" ngbDropdownToggle> {{ view |
+                            titlecase }} </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem (click)="setView(CalendarView.Month)"
+                                [class.active]="view === CalendarView.Month">
+                                Month
+                            </button>
+                            <button ngbDropdownItem (click)="setView(CalendarView.Week)"
+                                [class.active]="view === CalendarView.Week">
+                                Week
+                            </button>
+                            <button ngbDropdownItem (click)="setView(CalendarView.Day)"
+                                [class.active]="view === CalendarView.Day">
+                                Day
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-    </div>
-    <div class="col-md-4">
-        <div class="btn-group">
-            <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-                [class.active]="view === CalendarView.Month">
-                Month
-            </div>
-            <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
-                [class.active]="view === CalendarView.Week">
-                Week
-            </div>
-            <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-                Day
-            </div>
+        <div class="col-6">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
         </div>
     </div>
-</div>
-
+</app-nav-bar>
 
 <div [ngSwitch]="view" class="mt-3">
     <div class="col-12">
