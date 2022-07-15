@@ -32,7 +32,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component'
   ]
 })
 export class SharedModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule
     };
