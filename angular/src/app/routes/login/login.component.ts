@@ -109,6 +109,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public submitSignIn (value: any) {
+    this.router.navigate(['/calendar']);
     var signInUser: SignIn = {
       email: value.identification,
       password: value.password

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MenuItem } from '../../models';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,19 +8,10 @@ import { MenuItem } from '../../models';
 })
 export class NavBarComponent implements OnInit {
 
-  @Input()
-  items: MenuItem[];
-
-  @Output()
-  itemChoosed = new EventEmitter<string>();
-
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  public itemClicked (key: string) {
-    this.itemChoosed.emit(key);
+    console.log();
   }
 
 }

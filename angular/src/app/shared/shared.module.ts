@@ -6,6 +6,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component'
 
+/* PrimeNg */
+import {MenubarModule} from 'primeng/menubar';
+
 @NgModule({
 
   imports: [
@@ -13,7 +16,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component'
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    MenubarModule
   ],
   providers: [
     DatePipe
@@ -28,7 +32,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component'
     FormsModule,
     ReactiveFormsModule,
     SpinnerComponent,
-    NavBarComponent
+    NavBarComponent,
+    MenubarModule
   ]
 })
 export class SharedModule {

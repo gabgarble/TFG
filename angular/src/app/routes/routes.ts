@@ -18,6 +18,10 @@ export const routes = [
     // Not lazy-loaded routes
     { path: 'login', component: LoginComponent },
     { path: 'calendar', component: CalendarComponent },
+    { path: 'available-hours', component: CalendarComponent },
+    { path: 'import-calendar', component: CalendarComponent },
+    { path: 'settings', component: CalendarComponent },
+    { path: 'pending-requests', component: CalendarComponent },
 
     // Not found
     { path: '**', redirectTo: 'login' }
