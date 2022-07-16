@@ -12,7 +12,8 @@ export class NavBarComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+
     this.router.config.forEach((route) => {
       this.items.push({
         id: route.path,
@@ -22,5 +23,6 @@ export class NavBarComponent implements OnInit {
         routerLink: route.path
       });
     });
+
   }
 }

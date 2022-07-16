@@ -9,6 +9,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 /* PrimeNg */
 import { MenubarModule } from 'primeng/menubar';
 import {ButtonModule} from 'primeng/button';
+import { TabViewModule } from 'primeng/tabview';
+
 
 @NgModule({
 
@@ -18,7 +20,8 @@ import {ButtonModule} from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MenubarModule
+    MenubarModule,
+    
   ],
   providers: [
     DatePipe
@@ -34,7 +37,9 @@ import {ButtonModule} from 'primeng/button';
     ReactiveFormsModule,
     SpinnerComponent,
     NavBarComponent,
-    MenubarModule
+    MenubarModule,
+    ButtonModule,
+    TabViewModule
   ]
 })
 export class SharedModule {
