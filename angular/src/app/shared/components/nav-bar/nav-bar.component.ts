@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
-import { Router,NavigationEnd  } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
