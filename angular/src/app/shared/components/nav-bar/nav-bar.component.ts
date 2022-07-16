@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import { Router,NavigationEnd  } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,10 +9,24 @@ import {MenuItem} from 'primeng/api';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  public items: MenuItem[] = [];
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    console.log();
+    this.router.config.forEach( route => {
+      if(route.data.menuDisplay){
+        this.items.push(
+          {
+            icon: route.data.icon,
+            label: route.data.label,
+            url: route.path
+          }
+        );
+      }
+    });
   }
 
 }

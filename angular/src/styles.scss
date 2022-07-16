@@ -4,5 +4,10 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
+/* Importing PrimeNg SCSS files. */
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng/resources/themes/lara-dark-blue/theme.css';
+@import '~primeicons/primeicons.css';
+
 /* ng-select styles */
 @import "~@ng-select/ng-select/themes/default.theme.css";

@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component'
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 /* PrimeNg */
-import {MenubarModule} from 'primeng/menubar';
+import { MenubarModule } from 'primeng/menubar';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
 
@@ -17,7 +18,8 @@ import {MenubarModule} from 'primeng/menubar';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MenubarModule
+    MenubarModule,
+    ButtonModule
   ],
   providers: [
     DatePipe
@@ -33,7 +35,7 @@ import {MenubarModule} from 'primeng/menubar';
     ReactiveFormsModule,
     SpinnerComponent,
     NavBarComponent,
-    MenubarModule
+    //MenubarModule,
   ]
 })
 export class SharedModule {
