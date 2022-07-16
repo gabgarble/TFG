@@ -18,8 +18,7 @@ import {ButtonModule} from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MenubarModule,
-    ButtonModule
+    MenubarModule
   ],
   providers: [
     DatePipe
@@ -35,7 +34,7 @@ import {ButtonModule} from 'primeng/button';
     ReactiveFormsModule,
     SpinnerComponent,
     NavBarComponent,
-    //MenubarModule,
+    MenubarModule
   ]
 })
 export class SharedModule {
