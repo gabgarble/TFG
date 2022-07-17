@@ -24,8 +24,8 @@ export const routes = [
     { path: 'calendar', component: CalendarComponent, data: {icon: 'pi pi-calendar', label: 'Calendar', menuDisplay: true} },
     { path: 'available-hours', component: AvailableHoursComponent, data: {icon: 'pi pi-clock', label: 'Available Hours', menuDisplay: true} },
     { path: 'import-calendar', component: ImportCalendarComponent, data: {icon: 'pi pi-calendar-plus', label: 'Import Calendar', menuDisplay: true} },
-    { path: 'settings', component: SettingsComponent, data: {icon: 'pi pi-cog', label: 'Settings', menuDisplay: true}  },
     { path: 'pending-requests', component: PendingRequestsComponent, data: {icon: 'pi pi-bookmark', label: 'Pending requests', menuDisplay: true} },
+    { path: 'settings', component: SettingsComponent, data: {icon: 'pi pi-cog', label: 'Settings', menuDisplay: true}  },
 
     // Not found
     { path: '**', redirectTo: 'login', data: {menuDisplay: false} }
