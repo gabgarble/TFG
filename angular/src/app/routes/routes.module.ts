@@ -6,6 +6,9 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { AvailableHoursModule } from './available-hours/available-hours.module';
+import { ImportCalendarModule } from './import-calendar/import-calendar.module';
+import { SettingsModule } from './settings/settings.module';
+import { PendingRequestsModule } from './pending-requests/pending-requests.module';
 
 @NgModule({
   imports: [
@@ -13,6 +16,10 @@ import { AvailableHoursModule } from './available-hours/available-hours.module';
     CalendarsModule,
     CommonModule,
     SharedModule,
+    AvailableHoursModule,
+    ImportCalendarModule,
+    SettingsModule,
+    PendingRequestsModule,
     RouterModule.forRoot(routes)
   ],
   declarations: [],

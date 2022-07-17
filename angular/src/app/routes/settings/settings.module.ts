@@ -11,4 +11,4 @@ import { SettingsComponent } from './settings.component';
   ],
   declarations: [SettingsComponent]
 })
-export class AvailableHoursModule { }
+export class SettingsModule { }

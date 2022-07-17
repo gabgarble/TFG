@@ -11,4 +11,4 @@ import { ImportCalendarComponent } from './import-calendar.component';
   ],
   declarations: [ImportCalendarComponent]
 })
-export class AvailableHoursModule { }
+export class ImportCalendarModule { }

@@ -10,4 +10,4 @@ import { PendingRequestsComponent } from './pending-requests.component';
   ],
   declarations: [PendingRequestsComponent]
 })
-export class AvailableHoursModule { }
+export class PendingRequestsModule { }
