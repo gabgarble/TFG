@@ -14,15 +14,15 @@
     <ng-template pTemplate="body" let-event>
       <tr>
         <td *ngFor="let col of pendingEventsCols">
-          <ng-contetn *ngIf="col.field == 'actions'">
+          <div *ngIf="col.field == 'actions'; else elseCondition">
             <button pButton pRipple type="button" icon="pi pi-check"
               class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
             <button pButton pRipple type="button" icon="pi pi-times"
               class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
-          </ng-contetn>
-          <ng-contetn #else>
+          </div>
+          <ng-template #elseCondition>
             {{ event[col.field] }}
-          </ng-contetn>
+          </ng-template>
         </td>
       </tr>
     </ng-template>
@@ -45,15 +45,15 @@
     <ng-template pTemplate="body" let-user>
       <tr>
         <td *ngFor="let col of pendingUsersCols">
-          <ng-contetn *ngIf="col.field == 'actions'">
+          <div *ngIf="col.field == 'actions'; else elseCondition">
             <button pButton pRipple type="button" icon="pi pi-check"
               class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
             <button pButton pRipple type="button" icon="pi pi-times"
               class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
-          </ng-contetn>
-          <ng-contetn #else>
+          </div>
+          <ng-template #elseCondition>
             {{ user[col.field] }}
-          </ng-contetn>
+          </ng-template>
         </td>
       </tr>
     </ng-template>
