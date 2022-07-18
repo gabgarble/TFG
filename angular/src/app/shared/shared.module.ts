@@ -12,7 +12,12 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { TabViewModule } from 'primeng/tabview';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   imports: [
@@ -35,7 +40,13 @@ import {TableModule} from 'primeng/table';
     MenubarModule,
     ButtonModule,
     TabViewModule,
-    TableModule
+    TableModule,
+    CardModule,
+    TriStateCheckboxModule,
+    DropdownModule,
+    InputTextareaModule,
+    InputTextModule
+
   ],
 })
 export class SharedModule {
