@@ -18,6 +18,9 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
+import { AvatarModule } from 'primeng/avatar';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
   imports: [
@@ -45,8 +48,10 @@ import { InputTextModule } from 'primeng/inputtext';
     TriStateCheckboxModule,
     DropdownModule,
     InputTextareaModule,
-    InputTextModule
-
+    InputTextModule,
+    PanelModule,
+    AvatarModule,
+    PasswordModule
   ],
 })
 export class SharedModule {

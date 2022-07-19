@@ -1,72 +1,91 @@
-<p>
-  settings works!
-</p>
-
-
-<!-- Modal to manage users -->
-<!-- <ng-template #usersManagementModal let-close="close">
-  <div class="modal-header">
-      <h5 class="modal-title">Users management</h5>
-      <button type="button" class="close" (click)="close()">
-          <span aria-hidden="true">&times;</span>
-      </button>
+<div class="row ms-2 me-2">
+  <div class="mt-2 col-lg-6 col-md-12">
+    <p-panel header="Settings">
+      <div class="row mt-2">
+        <div class="col-4 d-flex justify-content-center">
+          <p-avatar icon="pi pi-user" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+        </div>
+        <div class="col-4">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Name</label>
+          </span>
+        </div>
+        <div class="col-4">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Surname</label>
+          </span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-4">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Email</label>
+          </span>
+        </div>
+        <div class="col-4">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Username</label>
+          </span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-sm"></button>
+      </div>
+    </p-panel>
   </div>
-  <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabUsers" class="nav-tabs">
-      <li class="tab-size" [ngbNavItem]="1">
-          <a ngbNavLink>Add new users</a>
-          <ng-template ngbNavContent>
-              <div class="modal-body">
-                  <div class="row" style="margin-right: 0px;">
-                      <div class="col-8">
-                          <form [formGroup]="usersManagementForm">
-                              <div class="form-group">
-                                  <input class="form-control" id="userEmail" formControlName="userEmail"
-                                      placeholder="User email">
-                              </div>
-                          </form>
-                      </div>
-                      <div class="col-4 text-center">
-                          <button type="button" class="btn btn-secondary resize-user-buttons mr-2"
-                              [disabled]="!usersManagementForm.valid"
-                              (click)="sendUserPetition(usersManagementForm.value)">
-                              Send <i class="far fa-paper-plane"></i>
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          </ng-template>
-      </li>
-      <li class="tab-size" [ngbNavItem]="2">
-          <a ngbNavLink>Petitions</a>
-          <ng-template ngbNavContent>
-              <div class="modal-body">
-                  <div class="row" *ngFor="let petition of pendingUserPetitions">
-                      <div class="col-3">
-                          <label class="mt-2">{{ petition.userSender.name }}</label>
-                      </div>
-                      <div class="col-3">
-                          <label class="mt-2">{{ petition.userSender.email }}</label>
-                      </div>
-                      <div class="col-6">
-                          <div class="row">
-                              <button type="button" class="btn btn-secondary resize-user-buttons mr-2 ml-4"
-                                  (click)="acceptUserPetition(petition.id)">
-                                  Accept <i class="fas fa-check"></i>
-                              </button>
-                              <button type="button" class="btn btn-primary resize-user-buttons"
-                                  (click)="declineUserPetition(petition.id)">
-                                  Reject <i class="fas fa-times"></i>
-                              </button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </ng-template>
-      </li>
-  </ul>
 
-  <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
-</ng-template> -->
+  <!-- Change password -->
+  <div class="mt-2 col-lg-3 col-md-6">
+    <p-panel header="Change password">
+      <div class="row">
+        <div class="mt-2">
+          <span class="p-float-label">
+            <p-password id="float-input" [(ngModel)]="repeatPassword" [toggleMask]="true"></p-password>
+            <label for="float-input">Password</label>
+          </span>
+        </div>
+        <div class="mt-4">
+          <span class="p-float-label">
+            <p-password id="float-input" [(ngModel)]="repeatPassword" [toggleMask]="true"></p-password>
+            <label for="float-input">Repeat password</label>
+          </span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button pButton pRipple label="Clear" icon="pi pi-trash" class="p-button-sm p-button-warning me-2"></button>
+        <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-sm"></button>
+      </div>
+    </p-panel>
+  </div>
+
+  <!-- Change email -->
+  <div class="mt-2 col-lg-3 col-md-6">
+    <p-panel header="Change email">
+      <div class="row">
+        <div class="mt-2">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Email</label>
+          </span>
+        </div>
+        <div class="mt-4">
+          <span class="p-float-label">
+            <input id="float-input" type="text" pInputText>
+            <label for="float-input">Repeat email</label>
+          </span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button pButton pRipple label="Clear" icon="pi pi-trash" class="p-button-sm p-button-warning me-2"></button>
+        <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-sm"></button>
+      </div>
+    </p-panel>
+  </div>
+</div>
 
 <!-- Modal to modify settings -->
 <!-- <ng-template #settingsModal let-modal let-close="close">
