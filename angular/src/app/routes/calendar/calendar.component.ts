@@ -483,24 +483,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   }
 
-  public openAvailableHoursModal() {
-    this.modal.open(this.availableHoursModal, { size: 'xl', scrollable: true });
-  }
-
-  public openModal(modal: MenuItem) {
-    switch (modal.key) {
-      case "settings":
-        this.modal.open(this.settingsModal, { size: modal.size });
-        break;
-      case "usersManagement":
-        this.modal.open(this.usersManagementModal, { size: modal.size });
-        break;
-      case "calendarsManagement":
-        this.modal.open(this.importCalendarModal, { size: modal.size });
-        break;
-    }
-  }
-
   /* New event */
   public initNewEventForm() {
     this.addNewEventForm = this.formBuilder.group({
