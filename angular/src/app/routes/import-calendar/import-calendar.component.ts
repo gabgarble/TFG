@@ -35,6 +35,7 @@ export class ImportCalendarComponent implements OnInit {
   public initImportCalendarForm () {
     this.importCalendarForm = this.formBuilder.group({
       'name': [null, Validators.required],
+      'description': [null, []],
       'platform': [null, Validators.required],
       'active': [null, Validators.required]
     });
