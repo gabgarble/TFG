@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-pending-requests',
-  templateUrl: './pending-requests.component.html',
-  styleUrls: ['./pending-requests.component.scss'],
+  selector: 'app-requests',
+  templateUrl: './requests.component.html',
+  styleUrls: ['./requests.component.scss'],
 })
-export class PendingRequestsComponent implements OnInit {
+export class RequestsComponent implements OnInit {
   
   public pendingEventsCols: any [] = [
     { field: 'actions', header: 'Actions' },

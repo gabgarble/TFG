@@ -1,0 +1,126 @@
+<div class="ms-2 me-2 mt-2">
+  <p-table [value]="pendingEvents" styleClass="p-datatable-striped p-datatable-sm" [scrollable]="true"
+    scrollHeight="400px">
+    <ng-template pTemplate="caption">
+      <div class="table-header">Pending events</div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of pendingEventsCols">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+        <td *ngFor="let col of pendingEventsCols">
+          <div *ngIf="col.field == 'actions'; else elseCondition">
+            <button pButton pRipple type="button" icon="pi pi-check"
+              class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
+            <button pButton pRipple type="button" icon="pi pi-times"
+              class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
+          </div>
+          <ng-template #elseCondition>
+            {{ event[col.field] }}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div class="ms-2 me-2 mt-3">
+  <p-table [value]="pendingUsers" styleClass="p-datatable-striped p-datatable-sm" [scrollable]="true"
+    scrollHeight="400px">
+    <ng-template pTemplate="caption">
+      <div class="table-header">Pending petitions</div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of pendingUsersCols">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td *ngFor="let col of pendingUsersCols">
+          <div *ngIf="col.field == 'actions'; else elseCondition">
+            <button pButton pRipple type="button" icon="pi pi-check"
+              class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
+            <button pButton pRipple type="button" icon="pi pi-times"
+              class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
+          </div>
+          <ng-template #elseCondition>
+            {{ user[col.field] }}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Modal to manage users -->
+<!-- <ng-template #usersManagementModal let-close="close">
+  <div class="modal-header">
+      <h5 class="modal-title">Users management</h5>
+      <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabUsers" class="nav-tabs">
+      <li class="tab-size" [ngbNavItem]="1">
+          <a ngbNavLink>Add new users</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <div class="row" style="margin-right: 0px;">
+                      <div class="col-8">
+                          <form [formGroup]="usersManagementForm">
+                              <div class="form-group">
+                                  <input class="form-control" id="userEmail" formControlName="userEmail"
+                                      placeholder="User email">
+                              </div>
+                          </form>
+                      </div>
+                      <div class="col-4 text-center">
+                          <button type="button" class="btn btn-secondary resize-user-buttons mr-2"
+                              [disabled]="!usersManagementForm.valid"
+                              (click)="sendUserPetition(usersManagementForm.value)">
+                              Send <i class="far fa-paper-plane"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </li>
+      <li class="tab-size" [ngbNavItem]="2">
+          <a ngbNavLink>Petitions</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <div class="row" *ngFor="let petition of pendingUserPetitions">
+                      <div class="col-3">
+                          <label class="mt-2">{{ petition.userSender.name }}</label>
+                      </div>
+                      <div class="col-3">
+                          <label class="mt-2">{{ petition.userSender.email }}</label>
+                      </div>
+                      <div class="col-6">
+                          <div class="row">
+                              <button type="button" class="btn btn-secondary resize-user-buttons mr-2 ml-4"
+                                  (click)="acceptUserPetition(petition.id)">
+                                  Accept <i class="fas fa-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-primary resize-user-buttons"
+                                  (click)="declineUserPetition(petition.id)">
+                                  Reject <i class="fas fa-times"></i>
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template> -->

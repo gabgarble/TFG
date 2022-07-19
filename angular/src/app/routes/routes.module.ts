@@ -8,7 +8,7 @@ import { routes } from './routes';
 import { AvailableHoursModule } from './available-hours/available-hours.module';
 import { ImportCalendarModule } from './import-calendar/import-calendar.module';
 import { SettingsModule } from './settings/settings.module';
-import { PendingRequestsModule } from './pending-requests/pending-requests.module';
+import { RequestsModule } from './requests/requests.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { PendingRequestsModule } from './pending-requests/pending-requests.modul
     AvailableHoursModule,
     ImportCalendarModule,
     SettingsModule,
-    PendingRequestsModule,
+    RequestsModule,
     RouterModule.forRoot(routes)
   ],
   declarations: [],
