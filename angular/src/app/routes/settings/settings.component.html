@@ -1,3 +1,147 @@
 <p>
   settings works!
 </p>
+
+
+<!-- Modal to manage users -->
+<!-- <ng-template #usersManagementModal let-close="close">
+  <div class="modal-header">
+      <h5 class="modal-title">Users management</h5>
+      <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabUsers" class="nav-tabs">
+      <li class="tab-size" [ngbNavItem]="1">
+          <a ngbNavLink>Add new users</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <div class="row" style="margin-right: 0px;">
+                      <div class="col-8">
+                          <form [formGroup]="usersManagementForm">
+                              <div class="form-group">
+                                  <input class="form-control" id="userEmail" formControlName="userEmail"
+                                      placeholder="User email">
+                              </div>
+                          </form>
+                      </div>
+                      <div class="col-4 text-center">
+                          <button type="button" class="btn btn-secondary resize-user-buttons mr-2"
+                              [disabled]="!usersManagementForm.valid"
+                              (click)="sendUserPetition(usersManagementForm.value)">
+                              Send <i class="far fa-paper-plane"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </li>
+      <li class="tab-size" [ngbNavItem]="2">
+          <a ngbNavLink>Petitions</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <div class="row" *ngFor="let petition of pendingUserPetitions">
+                      <div class="col-3">
+                          <label class="mt-2">{{ petition.userSender.name }}</label>
+                      </div>
+                      <div class="col-3">
+                          <label class="mt-2">{{ petition.userSender.email }}</label>
+                      </div>
+                      <div class="col-6">
+                          <div class="row">
+                              <button type="button" class="btn btn-secondary resize-user-buttons mr-2 ml-4"
+                                  (click)="acceptUserPetition(petition.id)">
+                                  Accept <i class="fas fa-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-primary resize-user-buttons"
+                                  (click)="declineUserPetition(petition.id)">
+                                  Reject <i class="fas fa-times"></i>
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template> -->
+
+<!-- Modal to modify settings -->
+<!-- <ng-template #settingsModal let-modal let-close="close">
+  <div class="modal-header">
+      <h5 class="modal-title">Settings</h5>
+      <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabSettings" class="nav-tabs">
+      <li class="tab-size" [ngbNavItem]="1">
+          <a ngbNavLink>General settings</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <form [formGroup]="settingsForm">
+                      <div class="form-group">
+                          <label for="exampleUsername">User name</label>
+                          <input class="form-control" id="name" placeholder="User name" formControlName="name">
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleUsername">User surname</label>
+                          <input class="form-control" id="surname" placeholder="User surname"
+                              formControlName="surname">
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleUsername">Username</label>
+                          <input class="form-control" id="username" placeholder="Username" formControlName="username">
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleUsername">Email</label>
+                          <input class="form-control" id="email" placeholder="User email" formControlName="email">
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                      (click)="close()">
+                      Cancel <i class="fas fa-times"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                      [disabled]="!settingsForm.valid" (click)="saveSettings(settingsForm.value)">
+                      Save <i class="far fa-save"></i>
+                  </button>
+              </div>
+          </ng-template>
+      </li>
+      <li class="tab-size" [ngbNavItem]="2">
+          <a ngbNavLink>Change password</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <form [formGroup]="changePasswordForm">
+                      <div class="form-group">
+                          <label for="exampleUsername">Password</label>
+                          <input class="form-control" type="password" id="password" placeholder="Password"
+                              formControlName="password">
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleUsername">Repeat password</label>
+                          <input class="form-control" type="password" id="title" placeholder="Repeat password"
+                              formControlName="confirmPassword">
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                      (click)="close()">
+                      Cancel <i class="fas fa-times"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                      [disabled]="!changePasswordForm.valid" (click)="changePassword(changePasswordForm.value)">
+                      Save <i class="far fa-save"></i>
+                  </button>
+              </div>
+          </ng-template>
+      </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template> -->

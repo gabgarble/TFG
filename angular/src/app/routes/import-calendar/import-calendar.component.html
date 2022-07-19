@@ -66,3 +66,68 @@
     </p-card>
   </div>
 </div>
+
+<!-- Modal to import calendar -->
+<!-- <ng-template #importCalendarModal let-close="close">
+  <div class="modal-header">
+      <h5 class="modal-title">Manage calendars</h5>
+      <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="defaultActiveTabImport" class="nav-tabs">
+      <li class="tab-size" [ngbNavItem]="1">
+          <a ngbNavLink>Import new calendar</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <form [formGroup]="importCalendarForm">
+                      <div class="row" style="margin-right: 0px;">
+                          <div class="col-6">
+                              <div class="form-group">
+                                  <input class="form-control" id="calendarName" placeholder="Calendar name..."
+                                      formControlName="calendarName">
+                              </div>
+                          </div>
+                          <div class="col-6 ">
+                              <div class="form-group">
+                                  <input type="file" class="form-control" id="file" formControlName="file"
+                                      (change)="onFileChange($event)">
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary resize-modal-buttons modal-buttons-text-size"
+                      (click)="close()">
+                      Cancel <i class="fas fa-times"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary resize-modal-buttons modal-buttons-text-size"
+                      [disabled]="!importCalendarForm.valid" (click)="importCalendar(importCalendarForm.value)">
+                      Import <i class="fas fa-upload"></i>
+                  </button>
+              </div>
+          </ng-template>
+      </li>
+      <li class="tab-size" [ngbNavItem]="2">
+          <a ngbNavLink>Imported Calendars</a>
+          <ng-template ngbNavContent>
+              <div class="modal-body">
+                  <div class="row" style="margin-right: 0px;">
+                      <div class="col-6">
+                          <label class="mt-2">Calendar name</label>
+                      </div>
+                      <div class="col-6 ">
+                          <button type="button" class="btn btn-primary"
+                              (click)="importCalendar(importCalendarForm.value)">
+                              Delete Calendar <i class="fas fa-trash-alt"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2 col-12"></div>
+</ng-template> -->

@@ -13,3 +13,40 @@
       Content 3
   </p-tabPanel>
 </p-tabView>
+
+<!-- Modal to see the availables hours -->
+<!-- <ng-template #availableHoursModal let-close="close" style="height: 80vh;">
+  <div class="modal-header">
+      <h5 class="modal-title">Users management</h5>
+      <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <div class="row text-center mb-3" style="margin-right: 0px;">
+          <div class="col-md-4">
+              <div class="btn-group">
+                  <div class="btn btn-primary" mwlCalendarPreviousView [view]="view2" [(viewDate)]="viewDate2"
+                      (viewDateChange)="closeOpenMonthViewDay()">
+                      Previous
+                  </div>
+                  <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate2">
+                      Today
+                  </div>
+                  <div class="btn btn-primary" mwlCalendarNextView [view]="view2" [(viewDate)]="viewDate2"
+                      (viewDateChange)="closeOpenMonthViewDay()">
+                      Next
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <h3>{{ viewDate2 | calendarDate:(view2 + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+
+          </div>
+      </div>
+      <mwl-calendar-week-view [viewDate]="viewDate2" [events]="availableHours" [refresh]="refresh">
+      </mwl-calendar-week-view>
+  </div>
+</ng-template> -->
