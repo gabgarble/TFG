@@ -8,6 +8,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
+/* Calendar */
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+]);
+
 /* PrimeNg */
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -51,7 +59,8 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     PanelModule,
     AvatarModule,
-    PasswordModule
+    PasswordModule,
+    FullCalendarModule
   ],
 })
 export class SharedModule {

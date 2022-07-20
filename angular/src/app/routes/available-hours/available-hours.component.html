@@ -1,52 +1,26 @@
-<p>
-  available-hours works!
-</p>
+<div class="row me-2 ms-2 mt-2">
+    <div class="d-flex justify-content-center mb-2">
+        <div class="row">
+            <div class="col-3 d-flex justify-content-center">
+                <button pButton pRipple type="button" icon="fas fa-chevron-left"
+                    class="p-button-rounded p-button-outlined" mwlCalendarPreviousView [view]="view"
+                    [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"></button>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <button pButton type="p-button-sm" label="Today" mwlCalendarToday [(viewDate)]="viewDate"></button>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+                <button pButton pRipple type="button" icon="fas fa-chevron-right"
+                    class="p-button-rounded p-button-outlined" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()"></button>
+            </div>
+        </div>
+        <!-- <div class="row d-flex justify-content-center">
+            <p-dropdown [options]="views" [(ngModel)]="selectedView" (onChange)="setView()"></p-dropdown>
+        </div> -->
+    </div>
 
-<p-tabView>
-  <p-tabPanel header="Header 1">
-     Content 1
-  </p-tabPanel>
-  <p-tabPanel header="Header 2">
-      Content 2
-  </p-tabPanel>
-  <p-tabPanel header="Header 3">
-      Content 3
-  </p-tabPanel>
-</p-tabView>
-
-<!-- Modal to see the availables hours -->
-<!-- <ng-template #availableHoursModal let-close="close" style="height: 80vh;">
-  <div class="modal-header">
-      <h5 class="modal-title">Users management</h5>
-      <button type="button" class="close" (click)="close()">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div class="modal-body">
-      <div class="row text-center mb-3" style="margin-right: 0px;">
-          <div class="col-md-4">
-              <div class="btn-group">
-                  <div class="btn btn-primary" mwlCalendarPreviousView [view]="view2" [(viewDate)]="viewDate2"
-                      (viewDateChange)="closeOpenMonthViewDay()">
-                      Previous
-                  </div>
-                  <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate2">
-                      Today
-                  </div>
-                  <div class="btn btn-primary" mwlCalendarNextView [view]="view2" [(viewDate)]="viewDate2"
-                      (viewDateChange)="closeOpenMonthViewDay()">
-                      Next
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <h3>{{ viewDate2 | calendarDate:(view2 + 'ViewTitle'):'en' }}</h3>
-          </div>
-          <div class="col-md-4">
-
-          </div>
-      </div>
-      <mwl-calendar-week-view [viewDate]="viewDate2" [events]="availableHours" [refresh]="refresh">
-      </mwl-calendar-week-view>
-  </div>
-</ng-template> -->
+    <mwl-calendar-week-view [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+</div>
