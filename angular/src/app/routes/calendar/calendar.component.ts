@@ -85,6 +85,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public viewDate: Date = new Date();
   public viewDate2: Date = new Date();
 
+  public views: string[] = ["Day", "Week", "Month"];
+  public selectedView: string = "Month";
+
   public modalData: {
     action: string;
     event: CalendarEvent;
@@ -459,10 +462,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   public deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  public setView(view: CalendarView) {
-    this.view = view;
   }
 
   public closeOpenMonthViewDay() {
