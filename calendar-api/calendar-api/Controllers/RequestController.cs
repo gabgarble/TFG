@@ -9,11 +9,11 @@ using calendar_api.Models;
 
 namespace calendar_api.Controllers
 {
-    public class UserPetitionsController : Controller
+    public class RequestController : Controller
     {
         private readonly calendarContext _context;
 
-        public UserPetitionsController(calendarContext context)
+        public RequestController(calendarContext context)
         {
             _context = context;
         }
