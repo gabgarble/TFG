@@ -29,6 +29,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { AvatarModule } from 'primeng/avatar';
 import { PasswordModule } from 'primeng/password';
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { PasswordModule } from 'primeng/password';
     PanelModule,
     AvatarModule,
     PasswordModule,
-    FullCalendarModule
+    FullCalendarModule,
+    ChipsModule
   ],
 })
 export class SharedModule {
