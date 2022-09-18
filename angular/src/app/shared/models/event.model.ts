@@ -4,7 +4,7 @@ import { BaseFilters } from './common/base-filters.model';
 import { BaseModel } from './common/base.model';
 
 export class CalendarEvent<MetaType = any> {
-    id?: string | number;
+    id?: number;
     start: Date;
     end?: Date;
     title: string;
