@@ -55,7 +55,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public changeSettingsForm: FormGroup;
   public settingsForm: FormGroup;
   public importCalendarForm: FormGroup;
-  public usersManagementForm: FormGroup;
   public changePasswordForm: FormGroup;
 
   /* Loadings */
@@ -63,14 +62,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public loadingEvents: boolean = true;
   public loadingUsers: boolean = true;
   public loadingManageCalendar: boolean = true;
-  public loadingManageUsers: boolean = true;
   public loadingUpdateUser: boolean = true;
   public loadingAddNewEvent: boolean = true;
   public loadingAddedUsers: boolean = true;
-  public loadingPendingPetitions: boolean = true;
-
-  /* User petitions*/
-  public pendingUserPetitions: UserPetition[];
 
   /* New event times and dates */
   public startTime = { hour: 0, minute: 0 };
@@ -112,7 +106,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   // public events: CalendarEvent[];
   public availableHours: CalendarEvent[];
-  public addedUsers: User[];
+  
   public selectedAddedUsers: User[] = <any>[];
   public colors: Color[];
   public events: CalendarEvent[] = [
@@ -166,12 +160,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private colorSubscription: Subscription;
   private getAddedUserSubscription: Subscription;
   private updateUserSubscription: Subscription;
-  private manageUsersSubscription: Subscription;
   private addNewEventSubscription: Subscription;
   private manageCalendarsSubscription: Subscription;
-  private getUserByEmailSubscription: Subscription;
   private getEventsSubscription: Subscription;
-  private getPendingPetitionsSubscription: Subscription;
 
   constructor(
     private modal: NgbModal,
@@ -187,10 +178,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.initNewEventForm();
     this.initSettingsForm();
     this.initImportCalendarForm();
-    this.initUsersManagementForm();
     this.initChangePasswordForm();
-    this.getAllAddedUsers();
-    this.getAllPendingPetitions();
+    // this.getAllAddedUsers();
     this.getAllEvents("1");
     console.log(this.loadingEvents);
   }
@@ -200,12 +189,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.colorSubscription ? this.colorSubscription.unsubscribe() : undefined;
     this.getAddedUserSubscription ? this.getAddedUserSubscription.unsubscribe() : undefined;
     this.updateUserSubscription ? this.updateUserSubscription.unsubscribe() : undefined;
-    this.manageUsersSubscription ? this.manageUsersSubscription.unsubscribe() : undefined;
     this.manageCalendarsSubscription ? this.manageCalendarsSubscription.unsubscribe() : undefined;
     this.addNewEventSubscription ? this.addNewEventSubscription.unsubscribe() : undefined;
-    this.getUserByEmailSubscription ? this.getUserByEmailSubscription.unsubscribe() : undefined;
     this.getEventsSubscription ? this.getEventsSubscription.unsubscribe() : undefined;
-    this.getPendingPetitionsSubscription ? this.getPendingPetitionsSubscription.unsubscribe() : undefined;
   }
 
   /* Petitions to the server */
@@ -264,7 +250,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   public updateUser(user: User) {
-    this.addNewEventSubscription ? this.addNewEventSubscription.unsubscribe() : undefined;
+    this.updateUserSubscription ? this.updateUserSubscription.unsubscribe() : undefined;
     this.loadingUpdateUser = true;
 
     this.updateUserSubscription = this.userService.update(user)
@@ -276,60 +262,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
         error => {
           this.loadingUpdateUser = false;
           console.error("Error updateUser: ", error);
-        }
-      );
-  }
-
-  public getUserByEmail(userEmail: string): User {
-    this.getUserByEmailSubscription ? this.getUserByEmailSubscription.unsubscribe() : undefined;
-    this.loadingUpdateUser = true;
-
-    this.getUserByEmailSubscription = this.userService.getUserByEmail(userEmail)
-      .subscribe(
-        data => {
-          this.loadingUpdateUser = false;
-          return data;
-        },
-        error => {
-          this.loadingUpdateUser = false;
-          console.error("Error updateUser: ", error);
-          return null;
-        }
-      );
-
-    return null;
-  }
-
-  public addNewUser(petition: UserPetition) {
-    this.manageUsersSubscription ? this.manageUsersSubscription.unsubscribe() : undefined;
-    this.loadingManageUsers = true;
-
-    this.manageUsersSubscription = this.userPetitionService.add(petition)
-      .subscribe(
-        data => {
-          //this.colors = data;
-          this.loadingManageUsers = false;
-        },
-        error => {
-          this.loadingManageUsers = false;
-          console.error("Error addNewUser: ", error);
-        }
-      );
-  }
-
-  public manageUserPetition(petition: UserPetition) {
-    this.manageUsersSubscription ? this.manageUsersSubscription.unsubscribe() : undefined;
-    this.loadingManageUsers = true;
-
-    this.manageUsersSubscription = this.userPetitionService.update(petition)
-      .subscribe(
-        data => {
-          //this.colors = data;
-          this.loadingManageUsers = false;
-        },
-        error => {
-          this.loadingManageUsers = false;
-          console.error("Error manageUserPetition: ", error);
         }
       );
   }
@@ -353,55 +285,37 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   public manageImportedCalendars() {
     this.manageCalendarsSubscription ? this.manageCalendarsSubscription.unsubscribe() : undefined;
-    this.loadingManageUsers = true;
+    this.loadingManageCalendar = true;
 
     this.manageCalendarsSubscription = this.colorService.getAll()
       .subscribe(
         data => {
           this.colors = data;
-          this.loadingManageUsers = false;
+          this.loadingManageCalendar = false;
         },
         error => {
-          this.loadingManageUsers = false;
+          this.loadingManageCalendar = false;
           console.error("Error manageImportedCalendars: ", error);
         }
       );
   }
 
-  public getAllAddedUsers() {
-    this.getAddedUserSubscription ? this.getAddedUserSubscription.unsubscribe() : undefined;
-    this.loadingAddedUsers = true;
+  // public getAllAddedUsers() {
+  //   this.getAddedUserSubscription ? this.getAddedUserSubscription.unsubscribe() : undefined;
+  //   this.loadingAddedUsers = true;
 
-    this.getAddedUserSubscription = this.userPetitionService.getUsersInformation("1", "accepted")
-      .subscribe(
-        data => {
-          this.addedUsers = data;
-          this.loadingAddedUsers = false;
-        },
-        error => {
-          this.loadingAddedUsers = false;
-          console.error("Error getAllAddedUsers: ", error);
-        }
-      );
-  }
-
-  public getAllPendingPetitions() {
-    this.getPendingPetitionsSubscription ? this.getPendingPetitionsSubscription.unsubscribe() : undefined;
-    this.loadingPendingPetitions = true;
-
-    this.getPendingPetitionsSubscription = this.userPetitionService.getUsersInformation("1", "pending")
-      .subscribe(
-        data => {
-          this.addedUsers = data;
-          this.loadingPendingPetitions = false;
-        },
-        error => {
-          this.loadingPendingPetitions = false;
-          console.error("Error getAllPendingPetitions: ", error);
-        }
-      );
-
-  }
+  //   this.getAddedUserSubscription = this.userPetitionService.getUsersInformation("1", "accepted")
+  //     .subscribe(
+  //       data => {
+  //         this.addedUsers = data;
+  //         this.loadingAddedUsers = false;
+  //       },
+  //       error => {
+  //         this.loadingAddedUsers = false;
+  //         console.error("Error getAllAddedUsers: ", error);
+  //       }
+  //     );
+  // }
 
   public dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -534,50 +448,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
 
     this.updateUser(user);
-  }
-
-  /* Users Management */
-  public initUsersManagementForm() {
-    this.usersManagementForm = this.formBuilder.group({
-      'userEmail': [null, Validators.required]
-    });
-  }
-
-  public sendUserPetition(value: any) {
-    console.log(value);
-
-    var user = this.getUserByEmail(value.userEmail);
-
-    var userPetition: UserPetition = {
-      id: 0,
-      userReceiver: user,
-      userSender: null,
-      petitionStatus: 3
-    };
-
-    this.addNewUser(userPetition);
-  }
-
-  public acceptUserPetition(petitionId: number) {
-    console.log(petitionId);
-
-    var petition: UserPetition = {
-      id: petitionId,
-      petitionStatus: 1
-    }
-
-    this.manageUserPetition(petition);
-  }
-
-  public declineUserPetition(petitionId: number) {
-    console.log(petitionId);
-
-    var petition: UserPetition = {
-      id: petitionId,
-      petitionStatus: 2
-    }
-
-    this.manageUserPetition(petition);
   }
 
   /* Import Calendar */
