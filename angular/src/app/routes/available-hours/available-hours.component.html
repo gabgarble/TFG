@@ -1,6 +1,7 @@
 <div class="row me-2 ms-2 mt-2">
     <div class="d-flex justify-content-center mb-2">
-        <div class="row">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        <div class="row me-2 ms-2">
             <div class="col-3 d-flex justify-content-center">
                 <button pButton pRipple type="button" icon="fas fa-chevron-left"
                     class="p-button-rounded p-button-outlined" mwlCalendarPreviousView [view]="view"
@@ -15,9 +16,9 @@
                     (viewDateChange)="closeOpenMonthViewDay()"></button>
             </div>
         </div>
-        <!-- <div class="row d-flex justify-content-center">
-            <p-dropdown [options]="views" [(ngModel)]="selectedView" (onChange)="setView()"></p-dropdown>
-        </div> -->
+        <div class="row d-flex justify-content-center">
+            <p-chips [(ngModel)]="users"></p-chips>
+        </div>
     </div>
 
     <mwl-calendar-week-view [viewDate]="viewDate" [events]="events" [refresh]="refresh"
