@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -19,6 +20,11 @@ export function createTranslateLoader(http: HttpClient) {
 export function initializeApp(appSettingsService: AppSettingsService) {
   return () => appSettingsService.load();
 }
+
+const googleLoginOptions = {
+  scope: 'profile email',
+  plugin_name:'login' //you can use any name here
+};
 
 @NgModule({
   declarations: [
@@ -37,7 +43,8 @@ export function initializeApp(appSettingsService: AppSettingsService) {
         deps: [HttpClient]
       }
     }),
-    SocialLoginModule
+    SocialLoginModule,
+    FontAwesomeModule
   ],
   providers: [
     AppSettingsService,
@@ -54,7 +61,8 @@ export function initializeApp(appSettingsService: AppSettingsService) {
               {
                 id: GoogleLoginProvider.PROVIDER_ID,
                 provider: new GoogleLoginProvider(
-                  '324191806616-t3m1vlkn4gsdk48t0o3a3m4ju8eu63la.apps.googleusercontent.com'
+                  '324191806616-t3m1vlkn4gsdk48t0o3a3m4ju8eu63la.apps.googleusercontent.com',
+                  {scopes: 'ggbleda@gmail.com'}
                 )
               },
             ],
