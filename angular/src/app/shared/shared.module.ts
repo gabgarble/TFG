@@ -44,8 +44,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ReactiveFormsModule,
     NgSelectModule,
     MenubarModule,
+    
   ],
-  providers: [DatePipe, ConfirmationService],
+  providers: [
+    DatePipe,
+    ConfirmationService,
+  ],
   declarations: [SpinnerComponent, NavBarComponent],
   exports: [
     CommonModule,

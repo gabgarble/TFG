@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { UserService } from '../../shared/services';
 import { SignIn, SignUp, User } from '../../shared/models';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   /* Default active TAB */
   public activeTab = 1;
-  
+
   /* Forms */
   public signUpForm: FormGroup;
   public signInForm: FormGroup;
@@ -28,12 +28,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   /* Subscription */
   private userSubscription: Subscription;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+  ) {
+
+  }
 
   ngOnInit() {
     this.initSignUpForm();
@@ -61,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
   }
 
-  private signInUser (user: SignIn) {
+  private signInUser(user: SignIn) {
     this.userSubscription ? this.userSubscription.unsubscribe() : undefined;
     this.loadingSignIn = true;
 
@@ -85,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       'email': [null, [Validators.required, Validators.email]],
       'password': [null, [Validators.required, Validators.minLength(6)]],
       'confirmPassword': [null, [Validators.required, Validators.minLength(6)]]
-    },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
+    }, { validator: this.checkIfMatchingPasswords('password', 'confirmPassword') });
   }
 
   public initSignInForm() {
@@ -98,17 +100,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   private checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
-          passwordConfirmationInput = group.controls[passwordConfirmationKey];
+        passwordConfirmationInput = group.controls[passwordConfirmationKey];
       if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
+        return passwordConfirmationInput.setErrors({ notEquivalent: true })
       }
       else {
-          return passwordConfirmationInput.setErrors(null);
+        return passwordConfirmationInput.setErrors(null);
       }
     }
   }
 
-  public submitSignIn (value: any) {
+  public submitSignIn(value: any) {
     this.router.navigate(['/calendar']);
     var signInUser: SignIn = {
       email: value.identification,
@@ -118,7 +120,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.signInUser(signInUser);
   }
 
-  public submitSignUp (value: any) {
+  public submitSignUp(value: any) {
     var signUpUser: SignUp = {
       username: value.username,
       email: value.email,
@@ -127,4 +129,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.signUpUser(signUpUser);
   }
+
 }

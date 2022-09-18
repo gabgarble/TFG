@@ -9,6 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -33,7 +36,8 @@ export function initializeApp(appSettingsService: AppSettingsService) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    SocialLoginModule
   ],
   providers: [
     AppSettingsService,
@@ -41,6 +45,23 @@ export function initializeApp(appSettingsService: AppSettingsService) {
             provide: APP_INITIALIZER,
             useFactory: initializeApp,
             deps: [AppSettingsService], multi: true
+        },
+        {
+          provide: 'SocialAuthServiceConfig',
+          useValue: {
+            autoLogin: false,
+            providers: [
+              {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider(
+                  '324191806616-t3m1vlkn4gsdk48t0o3a3m4ju8eu63la.apps.googleusercontent.com'
+                )
+              },
+            ],
+            onError: (err) => {
+              console.error(err);
+            }
+          } as SocialAuthServiceConfig
         }
   ],
   bootstrap: [AppComponent]
