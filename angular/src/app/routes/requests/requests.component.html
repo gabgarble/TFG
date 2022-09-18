@@ -16,9 +16,9 @@
         <td *ngFor="let col of pendingEventsCols">
           <div *ngIf="col.field == 'actions'; else elseCondition">
             <button pButton pRipple type="button" icon="pi pi-check"
-              class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
+              class="p-button-sm p-button-rounded p-button-outlined me-1" (click)="acceptEventPetition(event.eventId)"></button>
             <button pButton pRipple type="button" icon="pi pi-times"
-              class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
+              class="p-button-sm p-button-rounded p-button-danger p-button-outlined" (click)="declineEventPetition(event.eventId)"></button>
           </div>
           <ng-template #elseCondition>
             {{ event[col.field] }}
@@ -33,7 +33,11 @@
   <p-table [value]="pendingUsers" styleClass="p-datatable-striped p-datatable-sm" [scrollable]="true"
     scrollHeight="400px">
     <ng-template pTemplate="caption">
-      <div class="table-header">Pending petitions</div>
+      <div class="table-header">
+        Pending petitions
+        <button pButton pRipple type="button" icon="pi pi-plus"
+        class="p-button-sm p-button-rounded p-button-outlined ms-3"></button>
+      </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -47,9 +51,9 @@
         <td *ngFor="let col of pendingUsersCols">
           <div *ngIf="col.field == 'actions'; else elseCondition">
             <button pButton pRipple type="button" icon="pi pi-check"
-              class="p-button-sm p-button-rounded p-button-outlined me-1"></button>
+              class="p-button-sm p-button-rounded p-button-outlined me-1" (click)="acceptUserPetition(user.petitionId)"></button>
             <button pButton pRipple type="button" icon="pi pi-times"
-              class="p-button-sm p-button-rounded p-button-danger p-button-outlined"></button>
+              class="p-button-sm p-button-rounded p-button-danger p-button-outlined" (click)="declineUserPetition(user.petitionId)"></button>
           </div>
           <ng-template #elseCondition>
             {{ user[col.field] }}
