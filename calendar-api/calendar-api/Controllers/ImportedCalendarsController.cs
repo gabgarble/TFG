@@ -19,9 +19,9 @@ namespace calendar_api.Controllers
         }
 
         // GET: ImportedCalendars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int userId)
         {
-            var calendarContext = _context.ImportedCalendars.Include(i => i.User);
+            var calendarContext = _context.ImportedCalendars.Include(i => i.User).Where(x => x.UserId == userId);
             return View(await calendarContext.ToListAsync());
         }
 
