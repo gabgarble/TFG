@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { User, UserPetition } from 'src/app/shared/models';
 import { UserPetitionService, UserService } from 'src/app/shared/services';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-requests',
@@ -25,24 +26,9 @@ export class RequestsComponent implements OnInit {
     { field: 'email', header: 'Email' }
   ];
 
-  public pendingUsers: any[] = [
-    {name: "Gabriel Garcia",email: "ggarcia@gmail.com", petitionId: 1},
-    {name: "Miquel Soler",email: "msoler@gmail.com", petitionId: 2},
-    {name: "Ricardo Tormo",email: "rtormo@gmail.com", petitionId: 3},
-    {name: "Gema Navarro",email: "gnavarro@gmail.com", petitionId: 4},
-    {name: "Laura Ripoll",email: "lripoll@gmail.com", petitionId: 5},
-    {name: "Maria Llopis",email: "mllopis@gmail.com", petitionId: 6},
-    {name: "Tono Ordiñana",email: "tordiñana@gmail.com", petitionId: 7},
-    {name: "Raul Blesa",email: "rblesa@gmail.com", petitionId: 8}
-  ];
+  public pendingUsers: any[] = [];
 
-  public pendingEvents: any[] = [
-    {eventId: 1, eventName: "Reunión semanal", userName: "Miquel Soler",userEmail: "msoler@gmail.com",scheduled: "18/07/2022 10:00 - 18/07/2022 10:30"},
-    {eventId: 2, eventName: "Presentación proyecto", userName: "Miquel Soler",userEmail: "msoler@gmail.com",scheduled: "19/07/2022 15:00 - 19/07/2022 16:30"},
-    {eventId: 3, eventName: "Reunión seguimiento", userName: "Ricardo Tormo",userEmail: "rtormo@gmail.com",scheduled: "25/07/2022 09:00 - 25/07/2022 09:45"},
-    {eventId: 4, eventName: "Entorno de pruebas", userName: "Gema Navarro",userEmail: "gnavarro@gmail.com",scheduled: "07/07/2022 10:00 - 07/07/2022 11:00"},
-    {eventId: 5, eventName: "Seguimiento proyecto", userName: "Gema Navarro",userEmail: "gnavarro@gmail.com",scheduled: "12/07/2022 10:00 - 12/07/2022 10:30"}
-  ];
+  public pendingEvents: any[] = [];
 
   public usersManagementForm: FormGroup;
 
@@ -62,9 +48,12 @@ export class RequestsComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private userPetitionService: UserPetitionService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
+    this.pendingEvents = this.notificationService.getPendingEvents();
+    this.pendingUsers = this.notificationService.getPendingUsers();
     this.initUsersManagementForm();
     this.getAllPendingPetitions();
   }
@@ -99,36 +88,36 @@ export class RequestsComponent implements OnInit {
   }
 
   public acceptUserPetition(petitionId: number) {
-    console.log(petitionId);
-
     var petition: UserPetition = {
       id: petitionId,
       petitionStatus: 1
     }
 
     this.manageUserPetition(petition);
-    this.pendingUsers = this.pendingUsers.filter(x => x.petitionId != petitionId);
+    //this.pendingUsers = this.pendingUsers.filter(x => x.petitionId != petitionId);
+    this.pendingUsers = this.notificationService.addUser(petitionId);
   }
 
   public declineUserPetition(petitionId: number) {
-    console.log(petitionId);
-
     var petition: UserPetition = {
       id: petitionId,
       petitionStatus: 2
     }
 
     this.manageUserPetition(petition);
-    this.pendingUsers = this.pendingUsers.filter(x => x.petitionId != petitionId);
+    //this.pendingUsers = this.pendingUsers.filter(x => x.petitionId != petitionId);
+    this.pendingUsers = this.notificationService.declineUserPetition(petitionId);
   }
 
   //Event petitions
   public acceptEventPetition(eventId: number) {
-    this.pendingEvents = this.pendingEvents.filter(x => x.eventId != eventId);
+    this.pendingEvents = this.notificationService.addPendingEvent(eventId);
+    //this.pendingEvents = this.pendingEvents.filter(x => x.eventId != eventId);
   }
 
   public declineEventPetition(eventId: number) {
-    this.pendingEvents = this.pendingEvents.filter(x => x.eventId != eventId);
+    this.pendingEvents = this.notificationService.removePendingEvent(eventId);
+    //this.pendingEvents = this.pendingEvents.filter(x => x.eventId != eventId);
   }
 
   public manageUserPetition(petition: UserPetition) {

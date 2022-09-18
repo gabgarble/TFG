@@ -9,8 +9,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -42,9 +40,7 @@ const googleLoginOptions = {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    }),
-    SocialLoginModule,
-    FontAwesomeModule
+    })
   ],
   providers: [
     AppSettingsService,
@@ -52,24 +48,6 @@ const googleLoginOptions = {
             provide: APP_INITIALIZER,
             useFactory: initializeApp,
             deps: [AppSettingsService], multi: true
-        },
-        {
-          provide: 'SocialAuthServiceConfig',
-          useValue: {
-            autoLogin: false,
-            providers: [
-              {
-                id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(
-                  '324191806616-t3m1vlkn4gsdk48t0o3a3m4ju8eu63la.apps.googleusercontent.com',
-                  {scopes: 'ggbleda@gmail.com'}
-                )
-              },
-            ],
-            onError: (err) => {
-              console.error(err);
-            }
-          } as SocialAuthServiceConfig
         }
   ],
   bootstrap: [AppComponent]

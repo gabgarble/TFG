@@ -9,6 +9,7 @@ import { Color, MenuItem, User, UserPetition } from 'src/app/shared/models';
 import { EventService } from '../../shared/services/event.service';
 import { ConfirmationService } from 'primeng/api';
 import { zhCN } from 'date-fns/locale';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 const colors: any = {
   red: {
@@ -32,12 +33,6 @@ const colors: any = {
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-
-  /* Menu items */
-  public menuItems: MenuItem[] = [
-    { key: "settings", value: "Settings", size: "md", icon: 'fas fa-cog' },
-    { key: "usersManagement", value: "Users Management", size: "md", icon: 'fas fa-user' },
-    { key: "calendarsManagement", value: "Calendars Management", size: "lg", icon: 'fas fa-calendar-alt' }];
 
   /* Default active TABs */
   public defaultActiveTabSettings = 1;
@@ -107,7 +102,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public selectedAddedUsers: User[] = [];
   public addedUsers: User[] = [];
   public colors: Color[];
-  public events: CalendarEvent[] = [
+  public events: CalendarEvent[] = [];
+  /*public events: CalendarEvent[] = [
     {
       id: 1,
       start: subDays(startOfDay(new Date()), 1),
@@ -150,7 +146,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       },
       draggable: true,
     },
-  ];
+  ];*/
 
   public activeDayIsOpen: boolean = true;
 
@@ -169,10 +165,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private userPetitionService: UserPetitionService,
     private eventeService: EventService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
+    this.loadingEvents = true;
+    this.events = this.notificationService.getEvents();
+    this.events.forEach(event => event.actions = this.actions);
+    this.loadingEvents = false;
+
     this.initEventForm();
     this.initSettingsForm();
     this.initImportCalendarForm();
@@ -377,23 +379,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.displayModifyEventModal = true;
   }
 
-  public addEvent(): void {
-    /*this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        startDate: startOfDay(new Date()),
-        endDate: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];*/
-  }
-
   public closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
@@ -437,17 +422,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.loadingEvents = true;
     var id = this.events[this.events.length - 1].id + 1;
     event.id = id;
-    event.actions = this.actions;
     event.color = colors.yellow;
-    this.events.push(event);
+    //this.events.push(event);
+    this.notificationService.addEvent(event);
+    this.events = this.notificationService.getEvents();
     this.displayAddEventModal = false;
     this.loadingEvents = false;
   }
 
   public editNewEvent(event: CalendarEvent) {
     this.loadingEvents = true;
-    this.events = this.events.filter(x => x.id != event.id);
-    this.events.push(event);
+    /*this.events = this.events.filter(x => x.id != event.id);
+    this.events.push(event);*/
+    this.notificationService.updateEvent(event);
+    this.events = this.notificationService.getEvents();
     this.displayModifyEventModal = false;
     this.loadingEvents = false;
   }
@@ -457,7 +445,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
         this.loadingEvents = true;
-        this.events = this.events.filter((event) => event !== eventToDelete);
+        this.notificationService.deleteEvent(eventToDelete);
+        this.events = this.notificationService.getEvents();
+        //this.events = this.events.filter((event) => event !== eventToDelete);
         this.loadingEvents = false;
       }
     });
