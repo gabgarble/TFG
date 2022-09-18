@@ -114,3 +114,8 @@ $font-size-base: 1rem;
     text-decoration: none;
     background-color: lightgrey;
 }
+
+::ng-deep .p-multiselect {
+    width: 100% !important;
+    max-width: 100% !important;
+}

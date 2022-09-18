@@ -11,3 +11,8 @@
 
 /* ng-select styles */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+.p-dialog-header {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+}

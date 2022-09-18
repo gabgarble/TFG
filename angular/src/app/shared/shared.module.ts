@@ -30,6 +30,11 @@ import { PanelModule } from 'primeng/panel';
 import { AvatarModule } from 'primeng/avatar';
 import { PasswordModule } from 'primeng/password';
 import { ChipsModule } from 'primeng/chips';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   imports: [
@@ -40,7 +45,7 @@ import { ChipsModule } from 'primeng/chips';
     NgSelectModule,
     MenubarModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, ConfirmationService],
   declarations: [SpinnerComponent, NavBarComponent],
   exports: [
     CommonModule,
@@ -62,7 +67,11 @@ import { ChipsModule } from 'primeng/chips';
     AvatarModule,
     PasswordModule,
     FullCalendarModule,
-    ChipsModule
+    ChipsModule,
+    DialogModule,
+    CalendarModule,
+    MultiSelectModule,
+    ConfirmDialogModule
   ],
 })
 export class SharedModule {

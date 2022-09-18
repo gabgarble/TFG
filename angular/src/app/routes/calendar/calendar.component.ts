@@ -7,6 +7,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CalendarService, ColorService, UserPetitionService, UserService } from '../../shared/services';
 import { Color, MenuItem, User, UserPetition } from 'src/app/shared/models';
 import { EventService } from '../../shared/services/event.service';
+import { ConfirmationService } from 'primeng/api';
+import { zhCN } from 'date-fns/locale';
 
 const colors: any = {
   red: {
@@ -42,16 +44,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public defaultActiveTabImport = 1;
   public defaultActiveTabUsers = 1;
 
-  /* Modals */
-  @ViewChild('modifyEventModal', { static: true }) modifyEventModal: TemplateRef<any>;
-  @ViewChild('addNewEventModal', { static: true }) addNewEventModal: TemplateRef<any>;
-  @ViewChild('settingsModal', { static: true }) settingsModal: TemplateRef<any>;
-  @ViewChild('importCalendarModal', { static: true }) importCalendarModal: TemplateRef<any>;
-  @ViewChild('usersManagementModal', { static: true }) usersManagementModal: TemplateRef<any>;
-  @ViewChild('availableHoursModal', { static: true }) availableHoursModal: TemplateRef<any>;
+  /* Display Modals */
+  public displayAddEventModal: boolean = false;
+  public displayModifyEventModal: boolean = false;
 
   /* Forms */
-  public addNewEventForm: FormGroup;
+  public eventForm: FormGroup;
   public changeSettingsForm: FormGroup;
   public settingsForm: FormGroup;
   public importCalendarForm: FormGroup;
@@ -89,15 +87,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.handleEvent('Edit', event);
       },
     },
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.handleEvent('Delete', event);
       },
     },
   ];
@@ -106,11 +103,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   // public events: CalendarEvent[];
   public availableHours: CalendarEvent[];
-  
-  public selectedAddedUsers: User[] = <any>[];
+
+  public selectedAddedUsers: User[] = [];
+  public addedUsers: User[] = [];
   public colors: Color[];
   public events: CalendarEvent[] = [
     {
+      id: 1,
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
       title: 'A 3 day event',
@@ -124,12 +123,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
       draggable: true,
     },
     {
+      id: 2,
       start: startOfDay(new Date()),
       title: 'An event with no end date',
       color: colors.yellow,
       actions: this.actions,
     },
     {
+      id: 3,
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
@@ -137,6 +138,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       allDay: true,
     },
     {
+      id: 4,
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
       title: 'A draggable and resizable event',
@@ -150,9 +152,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     },
   ];
 
-
-  addedUserInput = new Subject<string>();
-
   public activeDayIsOpen: boolean = true;
 
   /* Subscription */
@@ -165,23 +164,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private getEventsSubscription: Subscription;
 
   constructor(
-    private modal: NgbModal,
     private formBuilder: FormBuilder,
-    private calendarService: CalendarService,
     private colorService: ColorService,
     private userService: UserService,
     private userPetitionService: UserPetitionService,
-    private eventeService: EventService
+    private eventeService: EventService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
-    this.initNewEventForm();
+    this.initEventForm();
     this.initSettingsForm();
     this.initImportCalendarForm();
     this.initChangePasswordForm();
     // this.getAllAddedUsers();
     this.getAllEvents("1");
-    console.log(this.loadingEvents);
   }
 
   ngOnDestroy() {
@@ -300,22 +297,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
       );
   }
 
-  // public getAllAddedUsers() {
-  //   this.getAddedUserSubscription ? this.getAddedUserSubscription.unsubscribe() : undefined;
-  //   this.loadingAddedUsers = true;
+  public getAllAddedUsers() {
+    this.getAddedUserSubscription ? this.getAddedUserSubscription.unsubscribe() : undefined;
+    this.loadingAddedUsers = true;
 
-  //   this.getAddedUserSubscription = this.userPetitionService.getUsersInformation("1", "accepted")
-  //     .subscribe(
-  //       data => {
-  //         this.addedUsers = data;
-  //         this.loadingAddedUsers = false;
-  //       },
-  //       error => {
-  //         this.loadingAddedUsers = false;
-  //         console.error("Error getAllAddedUsers: ", error);
-  //       }
-  //     );
-  // }
+    this.getAddedUserSubscription = this.userPetitionService.getUsersInformation("1", "accepted")
+      .subscribe(
+        data => {
+          this.addedUsers = data;
+          this.loadingAddedUsers = false;
+        },
+        error => {
+          this.loadingAddedUsers = false;
+          console.error("Error getAllAddedUsers: ", error);
+        }
+      );
+  }
 
   public dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -346,12 +343,38 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.handleEvent('DroppeOrResize', event);
   }
 
   public handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modifyEventModal, { size: 'lg' });
+    switch (action) {
+      case 'Delete':
+        this.deleteEvent(event);
+        break;
+      case 'Edit':
+        this.editEvent(event);
+        break;
+      case 'DroppeOrResize':
+
+        break;
+      case 'Click':
+        this.editEvent(event);
+        break;
+    }
+  }
+
+  public editEvent(event: CalendarEvent) {
+    this.eventForm.get("id").setValue(event.id);
+    this.eventForm.get("title").setValue(event.title);
+    this.eventForm.get("start").setValue(event.start);
+    this.eventForm.get("end").setValue(event.end);
+    this.eventForm.get("allDay").setValue(event.allDay);
+    this.eventForm.get("userEmail").setValue(event.userEmail);
+    this.eventForm.get("description").setValue(event.description);
+    this.eventForm.get("actions").setValue(event.actions);
+    this.eventForm.get("color").setValue(event.color);
+
+    this.displayModifyEventModal = true;
   }
 
   public addEvent(): void {
@@ -371,17 +394,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
     ];*/
   }
 
-  public deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
   public closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
 
+  public close() {
+    this.displayAddEventModal = false;
+    this.displayModifyEventModal = false;
+  }
+
   /* Open modals */
   public openAddEventModal() {
-    this.modal.open(this.addNewEventModal, { size: 'lg' });
+    this.eventForm.reset();
+    this.displayAddEventModal = true;
     var currentDate = new Date();
 
     this.startTime = { hour: currentDate.getHours(), minute: currentDate.getMinutes() };
@@ -390,23 +415,52 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     this.startDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     this.endDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
-
   }
 
   /* New event */
-  public initNewEventForm() {
-    this.addNewEventForm = this.formBuilder.group({
+  public initEventForm() {
+    this.eventForm = this.formBuilder.group({
+      'id': [null, Validators.nullValidator],
       'title': [null, Validators.required],
       'start': [null, Validators.nullValidator],
       'end': [null, Validators.nullValidator],
       'allDay': [null, Validators.nullValidator],
       'automaticDate': [null, Validators.nullValidator],
-      'userEmail': [null, Validators.nullValidator]
+      'userEmail': [null, Validators.nullValidator],
+      'description': [null, Validators.nullValidator],
+      'actions': [null, Validators.nullValidator],
+      'color': [null, Validators.nullValidator]
     });
   }
 
-  public saveNewEvent(value: any) {
-    console.log(value);
+  public saveNewEvent(event: CalendarEvent) {
+    this.loadingEvents = true;
+    var id = this.events[this.events.length - 1].id + 1;
+    event.id = id;
+    event.actions = this.actions;
+    event.color = colors.yellow;
+    this.events.push(event);
+    this.displayAddEventModal = false;
+    this.loadingEvents = false;
+  }
+
+  public editNewEvent(event: CalendarEvent) {
+    this.loadingEvents = true;
+    this.events = this.events.filter(x => x.id != event.id);
+    this.events.push(event);
+    this.displayModifyEventModal = false;
+    this.loadingEvents = false;
+  }
+
+  public deleteEvent(eventToDelete: CalendarEvent) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        this.loadingEvents = true;
+        this.events = this.events.filter((event) => event !== eventToDelete);
+        this.loadingEvents = false;
+      }
+    });
   }
 
   /* Settings */
