@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center ms-2">
-        <p-dropdown [options]="views" [(ngModel)]="selectedView"></p-dropdown>
+        <p-dropdown [options]="views" [(ngModel)]="selectedView" (onChange)="selectedViewChanged()"></p-dropdown>
     </div>
 </div>
 

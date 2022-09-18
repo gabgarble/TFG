@@ -2,6 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { Subject } from 'rxjs';
+import { addDays, addHours, endOfMonth, startOfDay, subDays } from 'date-fns';
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 
 @Component({
   selector: 'app-available-hours',
@@ -16,14 +32,68 @@ export class AvailableHoursComponent implements OnInit {
   };
 
   public viewDate: Date = new Date();
-  public events: CalendarEvent[];
   public refresh: Subject<any> = new Subject();
   public CalendarView = CalendarView;
-  public view: CalendarView = CalendarView.Month;
+  public view: CalendarView = CalendarView.Week;
   public activeDayIsOpen: boolean = true;
 
   public views: string[] = ["Day", "Week", "Month"];
-  public selectedView: string = "Week";
+
+  public users: string;
+
+  public events: CalendarEvent[] = [
+    {
+      start: new Date('2022-07-26T10:00:00.000Z'),
+      end: new Date('2022-07-26T15:00:00.000Z'),
+      title: '',
+      color: colors.red,
+      //actions: this.actions,
+      allDay: false,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+    {
+      start: new Date('2022-07-24T09:00:00:00.000Z'),
+      end: new Date('2022-07-24T14:00:00.000Z'),
+      title: '',
+      color: colors.yellow,
+      //actions: this.actions,
+    },
+    {
+      start: new Date('2022-07-27T09:00:00.000Z'),
+      end: new Date('2022-07-27T10:00:00.000Z'),
+      title: '',
+      color: colors.blue,
+      allDay: false,
+    },
+    {
+      start: new Date('2022-07-29T12:00:00.000Z'),
+      end: new Date('2022-07-29T14:00:00.000Z'),
+      title: '',
+      color: colors.yellow,
+      //actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+    {
+      start: new Date('2022-07-29T15:00:00.000Z'),
+      end: new Date('2022-07-29T17:00:00.000Z'),
+      title: '',
+      color: colors.blue,
+      //actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+  ];
 
   constructor() { }
 
@@ -50,20 +120,6 @@ export class AvailableHoursComponent implements OnInit {
       return iEvent;
     });*/
     this.handleEvent('Dropped or resized', event);
-  }
-
-  public setView() {
-    console.log(this.selectedView);
-    switch (this.selectedView) {
-      case "Day":
-        this.view = CalendarView.Day;
-      case "Week":
-        this.view = CalendarView.Week;
-      case "Month":
-        this.view = CalendarView.Month;
-      default:
-        this.view = CalendarView.Week;
-    }
   }
 
   public closeOpenMonthViewDay() {

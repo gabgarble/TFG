@@ -8,7 +8,7 @@ import { CalendarService, ColorService, UserPetitionService, UserService } from 
 import { Color, MenuItem, User, UserPetition } from 'src/app/shared/models';
 import { EventService } from '../../shared/services/event.service';
 
-/*const colors: any = {
+const colors: any = {
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3',
@@ -21,7 +21,7 @@ import { EventService } from '../../shared/services/event.service';
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
-};*/
+};
 
 @Component({
   selector: 'app-calendar',
@@ -80,10 +80,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /* Views */
   public view: CalendarView = CalendarView.Month;
-  public view2: CalendarView = CalendarView.Week;
-  public CalendarView = CalendarView;
   public viewDate: Date = new Date();
-  public viewDate2: Date = new Date();
 
   public views: string[] = ["Day", "Week", "Month"];
   public selectedView: string = "Month";
@@ -113,15 +110,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   public refresh: Subject<any> = new Subject();
 
-  public events: CalendarEvent[];
+  // public events: CalendarEvent[];
   public availableHours: CalendarEvent[];
   public addedUsers: User[];
   public selectedAddedUsers: User[] = <any>[];
   public colors: Color[];
-  /*public events: CalendarEvent[] = [
+  public events: CalendarEvent[] = [
     {
-      startDate: subDays(startOfDay(new Date()), 1),
-      endDate: addDays(new Date(), 1),
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
       title: 'A 3 day event',
       color: colors.red,
       actions: this.actions,
@@ -133,21 +130,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
       draggable: true,
     },
     {
-      startDate: startOfDay(new Date()),
+      start: startOfDay(new Date()),
       title: 'An event with no end date',
       color: colors.yellow,
       actions: this.actions,
     },
     {
-      startDate: subDays(endOfMonth(new Date()), 3),
-      endDate: addDays(endOfMonth(new Date()), 3),
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
       color: colors.blue,
       allDay: true,
     },
     {
-      startDate: addHours(startOfDay(new Date()), 2),
-      endDate: addHours(new Date(), 2),
+      start: addHours(startOfDay(new Date()), 2),
+      end: addHours(new Date(), 2),
       title: 'A draggable and resizable event',
       color: colors.yellow,
       actions: this.actions,
@@ -158,7 +155,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       draggable: true,
     },
   ];
-*/
+
 
   addedUserInput = new Subject<string>();
 
@@ -614,6 +611,28 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
       else {
         return passwordConfirmationInput.setErrors(null);
+      }
+    }
+  }
+
+  //Change calendar view
+  public selectedViewChanged() {
+    switch (this.selectedView) {
+      case 'Month': {
+        this.view = CalendarView.Month;
+        break;
+      }
+      case 'Week': {
+        this.view = CalendarView.Week;
+        break;
+      }
+      case 'Day': {
+        this.view = CalendarView.Day;
+        break;
+      }
+      default: {
+        this.view = CalendarView.Month;
+        break;
       }
     }
   }
