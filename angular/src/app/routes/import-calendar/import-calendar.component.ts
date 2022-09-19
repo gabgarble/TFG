@@ -17,10 +17,12 @@ export class ImportCalendarComponent implements OnInit {
   ];
 
   public calendars: any[] = [
-    {name: "Calendar 1", platform: "Google", active: true},
-    {name: "Calendar 2", platform: "Google", active: true},
-    {name: "Calendar 3", platform: "Apple", active: false}
+    {name: "Account Calendar", platform: "Google", description: "Calendar from the account ggbleda", active: true},
+    //{name: "Calendar 2", platform: "Google", active: true},
   ];
+
+  public selectedCalendar: any;
+  public disable: boolean = false;
 
   public platforms: any[] = [{label: "Google", value: 1},{label: "Apple", value: 2},{label: "Doodle", value: 3}]
 
@@ -39,6 +41,16 @@ export class ImportCalendarComponent implements OnInit {
       'platform': [null, Validators.required],
       'active': [null, Validators.required]
     });
+  }
+
+  onRowSelect(event: any) {
+    this.importCalendarForm.patchValue(event.data);
+    this.disable = true;
+  }
+
+  onRowUnselect(event: any) {
+    this.importCalendarForm.reset();
+    this.disable = false;
   }
 
 }

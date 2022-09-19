@@ -8,7 +8,7 @@
           </div>
           <div class="row ms-2 me-2 mb-2">
             <label>Active</label>
-            <p-triStateCheckbox ></p-triStateCheckbox>
+            <p-triStateCheckbox  formControlName="active"></p-triStateCheckbox>
           </div>
           <div class="row ms-2 me-2 mb-2">
             <label>Calendar name*</label>
@@ -22,7 +22,7 @@
             <div class="col-3"></div>
             <div class="col-6">
               <button pButton type="button" label="Sign in with the account" icon="pi pi-sign-in" class="p-button-sm"
-                style="width: 100%;"></button>
+                style="width: 100%;" [disabled]="disable"></button>
             </div>
             <div class="col-3"></div>
           </div>
@@ -37,7 +37,7 @@
   <div class="col-lg-8 col-md-12">
     <p-panel header="Calendars">
       <p-table [value]="calendars" styleClass="p-datatable-striped p-datatable-sm" [scrollable]="true"
-        scrollHeight="400px">
+        scrollHeight="400px" [(selection)]="selectedCalendar" dateKey="name" selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
         <ng-template pTemplate="header">
           <tr>
             <th *ngFor="let col of calendarCols">
@@ -46,7 +46,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-calendar>
-          <tr>
+          <tr [pSelectableRow]="calendar">
             <td *ngFor="let col of calendarCols">
               <div *ngIf="col.field == 'active'; else elseCondition">
                 <p-triStateCheckbox [(ngModel)]="calendar[col.field]" [disabled]="true"></p-triStateCheckbox>

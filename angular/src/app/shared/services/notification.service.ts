@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
-import { zhCN } from 'date-fns/locale';
 import { User } from '../models';
-
 
 const colors: any = {
   red: {
