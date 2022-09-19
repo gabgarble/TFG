@@ -103,50 +103,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public addedUsers: User[] = [];
   public colors: Color[];
   public events: CalendarEvent[] = [];
-  /*public events: CalendarEvent[] = [
-    {
-      id: 1,
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      id: 2,
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      id: 3,
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      id: 4,
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];*/
 
   public activeDayIsOpen: boolean = true;
 
@@ -174,6 +130,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.events = this.notificationService.getEvents();
     this.events.forEach(event => event.actions = this.actions);
     this.loadingEvents = false;
+    this.addedUsers = this.notificationService.getUsers();
 
     this.initEventForm();
     this.initSettingsForm();
@@ -423,6 +380,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     var id = this.events[this.events.length - 1].id + 1;
     event.id = id;
     event.color = colors.yellow;
+    event.userEmail = this.selectedAddedUsers;
+    console.log(event);
     //this.events.push(event);
     this.notificationService.addEvent(event);
     this.events = this.notificationService.getEvents();
@@ -434,6 +393,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.loadingEvents = true;
     /*this.events = this.events.filter(x => x.id != event.id);
     this.events.push(event);*/
+    event.userEmail = this.selectedAddedUsers;
     this.notificationService.updateEvent(event);
     this.events = this.notificationService.getEvents();
     this.displayModifyEventModal = false;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
+import { User } from '../models';
 
 
 const colors: any = {
@@ -91,6 +92,15 @@ export class NotificationService {
     {name: "Raul Blesa",email: "rblesa@gmail.com", petitionId: 8}
   ];
 
+  public user: User ={  
+    id: 22,
+    email: 'ggbleda@gmail.com',
+    name: 'Gabriel',
+    surname: 'Garcia',
+    username: 'ggbleda',
+    password: 'EstoPintaMal'
+  };
+
   public availableHours: CalendarEvent[] = [
     {
       id: 20,
@@ -101,7 +111,7 @@ export class NotificationService {
       //actions: this.actions,
       allDay: false,
       draggable: false,
-      userEmail: ['lripoll@gmail.com']
+      userEmail: [{id: 1, name: "Laura Ripoll",email: "lripoll@gmail.com"}]
     },
     {
       id: 21,
@@ -112,7 +122,7 @@ export class NotificationService {
       //actions: this.actions,
       allDay: false,
       draggable: false,
-      userEmail: ['lripoll@gmail.com']
+      userEmail: [{id: 1, name: "Laura Ripoll",email: "lripoll@gmail.com"}]
     },
     {
       id: 22,
@@ -121,7 +131,7 @@ export class NotificationService {
       title: 'Maria Llopis',
       color: colors.yellow,
       draggable: false,
-      userEmail: ['mllopis@gmail.com']
+      userEmail: [{id: 2, name: "Laura Ripoll",email: "mllopis@gmail.com"}]
     },
     {
       id: 23,
@@ -135,7 +145,7 @@ export class NotificationService {
         afterEnd: true,
       },
       draggable: false,
-      userEmail: ['msoler@gmail.com']
+      userEmail: [{id: 3, name: "Laura Ripoll",email: "msoler@gmail.com"}]
     },
     {
       id: 24,
@@ -149,7 +159,7 @@ export class NotificationService {
         afterEnd: true,
       },
       draggable: false,
-      userEmail: ['msoler@gmail.com']
+      userEmail: [{id: 3, name: "Laura Ripoll",email: "msoler@gmail.com"}]
     },
     {
       id: 24,
@@ -163,7 +173,7 @@ export class NotificationService {
         afterEnd: true,
       },
       draggable: false,
-      userEmail: ['mllopis@gmail.com']
+      userEmail: [{id: 2, name: "Laura Ripoll",email: "mllopis@gmail.com"}]
     },
   ];
 
@@ -256,8 +266,11 @@ export class NotificationService {
   }
 
   getAvailableHours(users: string[]){
-    var toReturn = this.availableHours.filter(x => users.includes(x.userEmail[0]));
+    var toReturn = this.availableHours.filter(x => users.includes(x.userEmail[0].email));
     return toReturn;
   }
 
+  getAppUser() {
+    return this.user;
+  }
 }
