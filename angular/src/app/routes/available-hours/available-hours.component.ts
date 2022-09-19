@@ -3,6 +3,7 @@ import { CalendarOptions } from '@fullcalendar/angular';
 import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { addDays, addHours, endOfMonth, startOfDay, subDays } from 'date-fns';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 const colors: any = {
   red: {
@@ -39,68 +40,27 @@ export class AvailableHoursComponent implements OnInit {
 
   public views: string[] = ["Day", "Week", "Month"];
 
-  public users: string;
+  public users: string[];
 
-  public events: CalendarEvent[] = [
-    {
-      start: new Date('2022-07-26T10:00:00.000Z'),
-      end: new Date('2022-07-26T15:00:00.000Z'),
-      title: '',
-      color: colors.red,
-      //actions: this.actions,
-      allDay: false,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: new Date('2022-07-24T09:00:00:00.000Z'),
-      end: new Date('2022-07-24T14:00:00.000Z'),
-      title: '',
-      color: colors.yellow,
-      //actions: this.actions,
-    },
-    {
-      start: new Date('2022-07-27T09:00:00.000Z'),
-      end: new Date('2022-07-27T10:00:00.000Z'),
-      title: '',
-      color: colors.blue,
-      allDay: false,
-    },
-    {
-      start: new Date('2022-07-29T12:00:00.000Z'),
-      end: new Date('2022-07-29T14:00:00.000Z'),
-      title: '',
-      color: colors.yellow,
-      //actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: new Date('2022-07-29T15:00:00.000Z'),
-      end: new Date('2022-07-29T17:00:00.000Z'),
-      title: '',
-      color: colors.blue,
-      //actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  public events: CalendarEvent[] = [];
 
-  constructor() { }
+  constructor(
+    private notificationService: NotificationService,
+  ) { }
 
   ngOnInit() {
+    
   }
 
-  public handleEvent(action: string, event: CalendarEvent): void {
+  seacrhHours () {
+    this.events = this.notificationService.getAvailableHours(this.users);
+    console.log(this.events);
+  }
+
+  public handleEvent(
+    action: string,
+     event: CalendarEvent
+  ): void {
 
   }
 

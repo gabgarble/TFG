@@ -78,7 +78,7 @@ export class NotificationService {
   ];
 
   public pendingUsers: any[] = [
-    {name: "Gabriel Garcia",email: "ggarcia@gmail.com", petitionId: 1},
+    //{name: "Gabriel Garcia",email: "ggarcia@gmail.com", petitionId: 1},
     {name: "Miquel Soler",email: "msoler@gmail.com", petitionId: 2},
     {name: "Ricardo Tormo",email: "rtormo@gmail.com", petitionId: 3},
     {name: "Gema Navarro",email: "gnavarro@gmail.com", petitionId: 4},
@@ -89,6 +89,82 @@ export class NotificationService {
     {name: "Maria Llopis",email: "mllopis@gmail.com", petitionId: 6},
     {name: "Tono Ordiñana",email: "tordiñana@gmail.com", petitionId: 7},
     {name: "Raul Blesa",email: "rblesa@gmail.com", petitionId: 8}
+  ];
+
+  public availableHours: CalendarEvent[] = [
+    {
+      id: 20,
+      start: new Date('2022-09-23T10:00:00.000'),
+      end: new Date('2022-09-23T11:30:00.000'),
+      title: 'Laura Ripoll',
+      color: colors.red,
+      //actions: this.actions,
+      allDay: false,
+      draggable: false,
+      userEmail: ['lripoll@gmail.com']
+    },
+    {
+      id: 21,
+      start: new Date('2022-09-23T12:00:00:00.000'),
+      end: new Date('2022-09-23T14:00:00.000'),
+      title: 'Laura Ripoll',
+      color: colors.red,
+      //actions: this.actions,
+      allDay: false,
+      draggable: false,
+      userEmail: ['lripoll@gmail.com']
+    },
+    {
+      id: 22,
+      start: new Date('2022-09-19T09:00:00.000'),
+      end: new Date('2022-09-19T10:00:00.000'),
+      title: 'Maria Llopis',
+      color: colors.yellow,
+      draggable: false,
+      userEmail: ['mllopis@gmail.com']
+    },
+    {
+      id: 23,
+      start: new Date('2022-09-21T12:00:00.000'),
+      end: new Date('2022-09-21T14:00:00.000'),
+      title: 'Miquel Soler',
+      color: colors.blue,
+      //actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: false,
+      userEmail: ['msoler@gmail.com']
+    },
+    {
+      id: 24,
+      start: new Date('2022-09-21T15:00:00.000'),
+      end: new Date('2022-09-21T17:00:00.000'),
+      title: 'Miquel Soler',
+      color: colors.blue,
+      //actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: false,
+      userEmail: ['msoler@gmail.com']
+    },
+    {
+      id: 24,
+      start: new Date('2022-09-20T08:00:00.000'),
+      end: new Date('2022-09-20T10:00:00.000'),
+      title: 'Maria Llopis',
+      color: colors.yellow,
+      //actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: false,
+      userEmail: ['mllopis@gmail.com']
+    },
   ];
 
   constructor() { }
@@ -177,6 +253,11 @@ export class NotificationService {
   declineUserPetition(petitionId: number){
     this.pendingUsers = this.pendingUsers.filter(x => x.petitionId != petitionId);
     return this.pendingUsers;
+  }
+
+  getAvailableHours(users: string[]){
+    var toReturn = this.availableHours.filter(x => users.includes(x.userEmail[0]));
+    return toReturn;
   }
 
 }
